@@ -31,6 +31,12 @@ android {
             keyAlias = "androiddebugkey"
             keyPassword = "android"
         }
+        create("releaseConfig") {
+            storeFile = file("debugkey/debug.jks")
+            storePassword = "123456"
+            keyAlias = "key0"
+            keyPassword = "123456"
+        }
     }
 
     buildTypes {
@@ -51,6 +57,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("releaseConfig")
         }
     }
     compileOptions {
