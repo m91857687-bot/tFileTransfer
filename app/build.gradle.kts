@@ -15,8 +15,6 @@ android {
         targetSdk = properties["ANDROID_TARGET_SDK"].toString().toInt()
         versionCode = properties["VERSION_CODE"].toString().toInt()
         versionName = properties["VERSION_NAME"].toString()
-
-        setProperty("archivesBaseName", "tfiletransfer-${properties["VERSION_NAME"].toString()}")
     }
 
     packaging {
@@ -27,13 +25,11 @@ android {
 
 
     signingConfigs {
-
-        val debugConfig = this.getByName("debug")
-        with(debugConfig) {
-            storeFile = File(projectDir, "debugkey${File.separator}debug.jks")
-            storePassword = "123456"
-            keyAlias = "key0"
-            keyPassword = "123456"
+        create("debugConfig") {
+            storeFile = file("${rootDir}/debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
         }
     }
 
@@ -45,7 +41,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.findByName("debug")
+            signingConfig = signingConfigs.getByName("debugConfig")
         }
         release {
             multiDexEnabled = true
@@ -55,19 +51,19 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.findByName("debug")
+            signingConfig = signingConfigs.getByName("debugConfig")
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
         viewBinding {
             enable = true
         }
     }
 
     kotlin {
-        jvmToolchain(11)
+        jvmToolchain(21)
     }
 
     buildFeatures {
