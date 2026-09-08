@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">شير لود</string>
+
+    <string name="dialog_positive">موافق</string>
+    <string name="dialog_negative">إلغاء</string>
+    <string name="error_toast">خطأ: %s</string>
+
+    <!--region FileTransportActivity-->
+    <string name="file_transport_activity_tab_my_apps">تطبيقاتي</string>
+    <string name="file_transport_activity_tab_my_images">صوري</string>
+    <string name="file_transport_activity_tab_my_videos">فيديوهاتي</string>
+    <string name="file_transport_activity_tab_my_audios">صوتياتي</string>
+    <string name="file_transport_activity_tab_my_dir">مجلداتي</string>
+    <string name="file_transport_activity_tab_remote_dir">المجلد البعيد</string>
+    <string name="file_transport_activity_tab_message">الرسائل</string>
+    <string name="file_count">%d ملفات</string>
+    <string name="connection_error_title">خطأ في الاتصال</string>
+    <string name="connection_error_message">تم إغلاق الاتصال، يرجى إعادة الاتصال.</string>
+    <string name="file_transfer_error_title">خطأ في النقل</string>
+    <string name="downloading_files_dialog_title" formatted="false">جاري تنزيل الملفات (%d/%d)</string>
+    <string name="sending_files_dialog_title" formatted="false">جاري إرسال الملفات (%d/%d)</string>
+    <string name="app_version">الإصدار: %s</string>
+    <string name="request_share_title">طلب مشاركة</string>
+    <string name="request_share_body">طلب مشاركة %d ملفات.</string>
+    <string name="request_share_positive">مشاركة</string>
+    <string name="request_share_negative">تجاهل</string>
+    <!--endregion-->
+
+    <!--region ConnectionActivity-->
+    <string name="local_network_connection_title">اتصال عبر الشبكة المحلية</string>
+    <string name="local_network_connection_description">إذا كان كلا الجهازين متصلين بنفس الشبكة، يمكنك استخدام هذه الطريقة للاتصال.\nاستخدم مسح رمز الاستجابة السريعة (QR) أو بث UDP.</string>
+    <string name="broadcast_connection_local_device">الجهاز المحلي: %s</string>
+    <string name="broadcast_connection_local_ip_address">عنوان IP المحلي: %s</string>
+    <string name="broadcast_connection_use_system_broadcast">استخدام بث النظام: </string>
+    <string name="local_network_scan_qr_code">مسح رمز الاستجابة السريعة</string>
+    <string name="local_network_show_qr_code">إظهار رمز الاستجابة السريعة</string>
+    <string name="broadcast_connection_as_receiver">البحث عن خوادم</string>
+    <string name="broadcast_connection_as_sender">كخادم</string>
+
+    <string name="broadcast_waiting_connect">في انتظار الاتصال&#8230;</string>
+    <string name="broadcast_waiting_cancel">إلغاء</string>
+
+    <string name="broadcast_request_connect">طلب اتصال</string>
+    <string name="broadcast_request_accept">قبول</string>
+    <string name="broadcast_request_deny">رفض</string>
+
+    <string name="broadcast_searching_server">جاري البحث&#8230;</string>
+    <string name="broadcast_searching_cancel">إلغاء</string>
+
+    <string name="tcp_scan_title">فحص الأجهزة</string>
+    <string name="tcp_scan_tips">يمكنك فحص الأجهزة الأخرى على نفس الشبكة. عندما يكون الخادم قيد التشغيل، سيتم اكتشاف جهازك من قبل الآخرين.</string>
+    <string name="tcp_scan_server_status_active">حالة الخادم: قيد التشغيل</string>
+    <string name="tcp_scan_server_status_error">حالة الخادم: خطأ</string>
+    <string name="tcp_scan_scan">فحص</string>
+
+    <string name="wifi_p2p_connection_title">اتصال عبر WiFi P2P</string>
+    <string name="wifi_p2p_connection_tips">فقط قم بتشغيل WiFi و GPS بالقرب من الجهاز الهدف وسيقوم النظام بالعثور عليه.</string>
+    <string name="wifi_p2p_connection_remote_device" formatted="false">الجهاز البعيد المتصل\nالاسم: %s\nعنوان IP: %s\nالحالة: %s</string>
+    <string name="wifi_p2p_connection_local_address">العنوان المحلي: %s</string>
+    <string name="wifi_p2p_connection_transfer_files">نقل الملفات</string>
+    <string name="wifi_p2p_connection_close_current_connection">إغلاق الاتصال</string>
+    <string name="local_network_local_address">العناوين المحلية: </string>
+
+    <string name="request_share_files">طلب مشاركة %d ملفات.</string>
+    <string name="drop_request_share_files">تجاهل</string>
+    <!--endregion-->
+
+    <!--region Size-->
+    <string name="size_B">%dB</string>
+    <string name="size_KB">%.2fKB</string>
+    <string name="size_MB">%.2fMB</string>
+    <string name="size_GB">%.2fGB</string>
+    <!--endregion-->
+
+    <!--region FolderMenu-->
+    <string name="folder_menu_select_all_files">تحديد جميع الملفات</string>
+    <string name="folder_menu_unselect_all_files">إلغاء تحديد جميع الملفات</string>
+    <string name="folder_menu_sort_by_date">فرز حسب تاريخ التعديل</string>
+    <string name="folder_menu_sort_by_file_name">فرز حسب الاسم</string>
+    <!--endregion-->
+
+    <!--region TransferSettingsMenu-->
+    <string name="transfer_setting_share_folder">مشاركة مجلدي</string>
+    <!--endregion-->
+
+    <!--region SettingsDialog-->
+    <string name="settings_title">الإعدادات</string>
+    <string name="setting_download_dir">مجلد التنزيلات</string>
+    <string name="setting_share_my_dir">مشاركة مجلدي</string>
+    <string name="setting_max_connections_size">الحد الأقصى لاتصالات Tcp</string>
+    <string name="setting_language">اللغة (Language)</string>
+    <!--endregion-->
+
+    <!--region RequestPermission-->
+    <string name="permission_request_title">طلب إذن</string>
+    <string name="permission_storage_request_content">يحتاج شير لود إلى إذن إدارة التخزين لمشاركة ملفاتك.</string>
+    <!--endregion-->
+
+    <!--region FolderSelectActivity-->
+    <string name="folder_select_title">تحديد مجلد</string>
+    <string name="folder_select_create">إنشاء مجلد جديد</string>
+    <string name="folder_select_error_title">فشل في تحديد المجلد</string>
+    <string name="folder_select_error_body">خطأ: %s</string>
+    <string name="folder_select_create_folder_error">فشل في إنشاء المجلد</string>
+    <string name="folder_select_create_new_folder_hint">أدخل اسم المجلد</string>
+    <!--endregion-->
+
+    <!--region Media-->
+    <string name="media_artist_name">الفنان: %s</string>
+    <string name="media_album_name">الألبوم: %s</string>
+    <!--endregion-->
+
+</resources>

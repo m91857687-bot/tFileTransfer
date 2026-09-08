@@ -12,6 +12,8 @@ import com.tans.tfiletransporter.ui.folderselect.FolderSelectActivity
 import com.tans.tuiutils.actresult.startActivityResultSuspend
 import com.tans.tuiutils.dialog.BaseCoroutineStateDialogFragment
 import com.tans.tuiutils.view.clicks
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -79,6 +81,15 @@ class SettingsDialog : BaseCoroutineStateDialogFragment<Settings.SettingsData>(
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
             }
         })
+
+        viewBinding.btnLangEn.clicks(this) {
+            AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("en"))
+            dismiss()
+        }
+        viewBinding.btnLangAr.clicks(this) {
+            AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("ar"))
+            dismiss()
+        }
     }
 }
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">tFileTransfer</string>
+    <string name="app_name">Share Load</string>
 
     <string name="dialog_positive">OK</string>
     <string name="dialog_negative">Cancel</string>
@@ -88,6 +88,7 @@
     <string name="setting_download_dir">Download Folder</string>
     <string name="setting_share_my_dir">Share My Folder</string>
     <string name="setting_max_connections_size">Max Tcp Connections</string>
+    <string name="setting_language">Language / اللغة</string>
     <!--endregion-->
 
     <!--region RequestPermission-->
