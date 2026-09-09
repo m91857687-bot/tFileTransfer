@@ -89,6 +89,8 @@
     <string name="setting_share_my_dir">Share My Folder</string>
     <string name="setting_max_connections_size">Max Tcp Connections</string>
     <string name="setting_language">Language / اللغة</string>
+    <string name="setting_about_app">About App</string>
+    <string name="setting_developer">Developer: محمد هشام الصلاحي (Mohammed Hisham Al-Salahi)</string>
     <!--endregion-->
 
     <!--region RequestPermission-->

@@ -90,6 +90,8 @@
     <string name="setting_share_my_dir">مشاركة مجلدي</string>
     <string name="setting_max_connections_size">الحد الأقصى لاتصالات Tcp</string>
     <string name="setting_language">اللغة (Language)</string>
+    <string name="setting_about_app">حول التطبيق</string>
+    <string name="setting_developer">المطور: محمد هشام الصلاحي</string>
     <!--endregion-->
 
     <!--region RequestPermission-->

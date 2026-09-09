@@ -297,6 +297,8 @@ class WifiP2pConnectionFragment : BaseCoroutineStateFragment<WifiP2pConnectionFr
             if (wifiP2pConnection != null) {
                 viewBinding.connectedActionsLayout.visibility = View.VISIBLE
                 viewBinding.remoteDevicesRv.visibility = View.GONE
+                viewBinding.radarView.visibility = View.GONE
+                viewBinding.radarView.stop()
                 if (handshake != null) {
                     viewBinding.transferFileLayout.visibility = View.VISIBLE
                 } else {
@@ -305,6 +307,8 @@ class WifiP2pConnectionFragment : BaseCoroutineStateFragment<WifiP2pConnectionFr
             } else {
                 viewBinding.connectedActionsLayout.visibility = View.GONE
                 viewBinding.remoteDevicesRv.visibility = View.VISIBLE
+                viewBinding.radarView.visibility = View.VISIBLE
+                viewBinding.radarView.start()
             }
         }
 

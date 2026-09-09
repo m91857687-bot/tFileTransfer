@@ -79,7 +79,17 @@ class FileDownloaderDialog : BaseSimpleCoroutineResultForceDialogFragment<FileTr
             speedCalculator.addObserver(object : SpeedCalculator.Companion.SpeedObserver {
                 override fun onSpeedUpdated(speedInBytes: Long, speedInString: String) {
                     updateState {
-                        it.copy(speedString = speedInString)
+                        val file = it.transferFile.getOrNull()
+                        val process = it.process
+                        var timeStr = ""
+                        if (file != null && speedInBytes > 0) {
+                            val remainBytes = file.size - process
+                            val remainSeconds = remainBytes / speedInBytes
+                            val m = remainSeconds / 60
+                            val s = remainSeconds % 60
+                            timeStr = String.format(" | %02d:%02d", m, s)
+                        }
+                        it.copy(speedString = speedInString + timeStr)
                     }
                 }
             })
