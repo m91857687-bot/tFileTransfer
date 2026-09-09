@@ -112,6 +112,16 @@ class ConnectionActivity : BaseCoroutineStateActivity<ConnectionActivity.Compani
             true
         }
 
+        viewBinding.toolBar.menu.findItem(R.id.history).setOnMenuItemClickListener {
+            startActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.history.HistoryActivity::class.java))
+            true
+        }
+
+        viewBinding.toolBar.menu.findItem(R.id.web_share).setOnMenuItemClickListener {
+            startActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.webshare.WebShareActivity::class.java))
+            true
+        }
+
         val tcWifiP2p = supportFragmentManager.beginTransaction()
         if (supportFragmentManager.findFragmentByTag(WIFI_P2P_CONNECTION_FRAGMENT_TAG) == null) {
             tcWifiP2p.add(R.id.wifi_p2p_fragment_container, wifiP2pFragment, WIFI_P2P_CONNECTION_FRAGMENT_TAG)

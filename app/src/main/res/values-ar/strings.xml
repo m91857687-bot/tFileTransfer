@@ -111,4 +111,21 @@
     <string name="media_album_name">الألبوم: %s</string>
     <!--endregion-->
 
+    <!--region History & Web Share-->
+    <string name="history_title">سجل النقل</string>
+    <string name="history_sent_to">تم الإرسال إلى: %s</string>
+    <string name="history_received_from">تم الاستلام من: %s</string>
+    <string name="history_file_not_found">لم يتم العثور على الملف</string>
+    <string name="history_no_app_found">لا يوجد تطبيق لفتح هذا الملف</string>
+    
+    <string name="web_share_title">مشاركة عبر المتصفح</string>
+    <string name="web_share_start">بدء المشاركة</string>
+    <string name="web_share_stop">إيقاف المشاركة</string>
+    <string name="web_share_description">افتح العنوان التالي في متصفح الويب على جهاز آخر لتنزيل الملفات:</string>
+    <string name="web_share_select_files">يرجى تحديد الملفات للمشاركة أولاً</string>
+    <string name="web_share_running">المشاركة عبر المتصفح قيد التشغيل</string>
+    <string name="web_share_connect_wifi">يرجى الاتصال بشبكة Wi-Fi أولاً.</string>
+    <string name="web_share_failed">فشل بدء المشاركة عبر المتصفح</string>
+    <!--endregion-->
+
 </resources>

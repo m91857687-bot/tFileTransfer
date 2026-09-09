@@ -110,4 +110,21 @@
     <string name="media_album_name">Album: %s</string>
     <!--endregion-->
 
+    <!--region History & Web Share-->
+    <string name="history_title">Transfer History</string>
+    <string name="history_sent_to">Sent to: %s</string>
+    <string name="history_received_from">Received from: %s</string>
+    <string name="history_file_not_found">File not found</string>
+    <string name="history_no_app_found">No app found to open this file</string>
+    
+    <string name="web_share_title">Web Share</string>
+    <string name="web_share_start">Start Web Share</string>
+    <string name="web_share_stop">Stop Web Share</string>
+    <string name="web_share_description">Open the following address in a web browser on another device to download files:</string>
+    <string name="web_share_select_files">Select files to share first</string>
+    <string name="web_share_running">Web Share is Running</string>
+    <string name="web_share_connect_wifi">Please connect to Wi-Fi first.</string>
+    <string name="web_share_failed">Failed to start Web Share</string>
+    <!--endregion-->
+
 </resources>

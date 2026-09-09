@@ -130,6 +130,14 @@ dependencies {
     implementation(libs.tapm.autoinit)
     debugImplementation(libs.tapm.log)
 
+    // Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
+    // NanoHTTPD
+    implementation("org.nanohttpd:nanohttpd:2.3.1")
+
     // tlog
     implementation(libs.tlog)
 

@@ -22,6 +22,7 @@ corouines = "1.10.2"
 moshi = "1.15.2"
 netty = "4.1.86.Final"
 okio = "3.16.0"
+room = "2.6.1"
 rxbinding = "4.0.0"
 camerax = "1.5.0"
 barcodescan = "17.3.0"
@@ -82,6 +83,9 @@ tapm-log = { group = "io.github.tans5", name= "tapm-log", version.ref = "tapm" }
 tapm-breakpad = { group = "io.github.tans5", name= "tapm-breakpad", version.ref = "tapm" }
 tlog = { group = "io.github.tans5", name = "tlog", version.ref = "tlog" }
 tlrucache = { group = "io.github.tans5", name = "tlrucache", version.ref = "tlrucache" }
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

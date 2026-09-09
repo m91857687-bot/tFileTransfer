@@ -57,6 +57,8 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
 import java.net.InetAddress
+import com.tans.tfiletransporter.db.AppDatabase
+import com.tans.tfiletransporter.db.TransferHistory
 import java.io.File
 import java.lang.ref.WeakReference
 import java.util.ArrayList
@@ -433,6 +435,24 @@ class FileTransportActivity : BaseCoroutineStateActivity<FileTransportActivity.C
                 )
                 this@FileTransportActivity.supportFragmentManager.showSimpleCancelableCoroutineResultDialogSuspend(d)
             }
+        } else if (result is FileTransferResult.Finished) {
+            withContext(Dispatchers.IO) {
+                val db = AppDatabase.getDatabase(this@FileTransportActivity)
+                val time = System.currentTimeMillis()
+                val remoteInfo = intent.getRemoteInfo() ?: "Unknown"
+                for (f in files) {
+                    db.transferHistoryDao().insert(
+                        TransferHistory(
+                            fileName = f.exploreFile.name,
+                            fileSize = f.exploreFile.size,
+                            timestamp = time,
+                            remoteDevice = remoteInfo,
+                            isSend = true,
+                            filePath = f.realFile.absolutePath
+                        )
+                    )
+                }
+            }
         }
         fileTransferMutex.unlock()
     }
@@ -460,6 +480,25 @@ class FileTransportActivity : BaseCoroutineStateActivity<FileTransportActivity.C
                     positiveButtonText = getString(R.string.dialog_positive)
                 )
                 this@FileTransportActivity.supportFragmentManager.showSimpleCancelableCoroutineResultDialogSuspend(d)
+            }
+        } else if (result is FileTransferResult.Finished) {
+            withContext(Dispatchers.IO) {
+                val db = AppDatabase.getDatabase(this@FileTransportActivity)
+                val time = System.currentTimeMillis()
+                val remoteInfo = intent.getRemoteInfo() ?: "Unknown"
+                val downloadDir = File(Settings.getDownloadDir())
+                for (f in fixedFiles) {
+                    db.transferHistoryDao().insert(
+                        TransferHistory(
+                            fileName = f.name,
+                            fileSize = f.size,
+                            timestamp = time,
+                            remoteDevice = remoteInfo,
+                            isSend = false,
+                            filePath = File(downloadDir, f.name).absolutePath
+                        )
+                    )
+                }
             }
         }
         fileTransferMutex.unlock()
