@@ -1,4 +1,10 @@
-package com.tans.tfiletransporter.ui.connection
+import re
+
+with open("app/src/main/java/com/tans/tfiletransporter/ui/connection/HotspotActivity.kt", "r") as f:
+    content = f.read()
+
+# Replace the content of HotspotActivity
+new_content = """package com.tans.tfiletransporter.ui.connection
 
 import android.content.Context
 import android.net.wifi.WifiManager
@@ -96,3 +102,7 @@ class HotspotActivity : AppCompatActivity() {
         findViewById<View>(R.id.toolbar).setOnClickListener { finish() }
     }
 }
+"""
+
+with open("app/src/main/java/com/tans/tfiletransporter/ui/connection/HotspotActivity.kt", "w") as f:
+    f.write(new_content)
