@@ -97,6 +97,10 @@
     <!--region RequestPermission-->
     <string name="permission_request_title">طلب إذن</string>
     <string name="permission_storage_request_content">يحتاج شير لود إلى إذن إدارة التخزين لمشاركة ملفاتك.</string>
+    <string name="prompt_enable_location_title">تفعيل الموقع (GPS)</string>
+    <string name="prompt_enable_location_content">يجب تفعيل خدمات الموقع للبحث عن الأجهزة القريبة عبر Wi-Fi Direct. يرجى تفعيل الموقع من الإعدادات.</string>
+    <string name="prompt_enable_wifi_title">تفعيل Wi-Fi</string>
+    <string name="prompt_enable_wifi_content">يجب تفعيل شبكة الـ Wi-Fi للاتصال ونقل الملفات. يرجى تفعيل الـ Wi-Fi.</string>
     <!--endregion-->
 
     <!--region FolderSelectActivity-->

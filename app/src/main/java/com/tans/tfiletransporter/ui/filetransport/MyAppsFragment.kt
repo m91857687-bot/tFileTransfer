@@ -24,6 +24,7 @@ import com.tans.tuiutils.adapter.impl.datasources.FlowDataSourceImpl
 import com.tans.tuiutils.adapter.impl.viewcreatators.SingleItemViewCreatorImpl
 import com.tans.tuiutils.fragment.BaseCoroutineStateFragment
 import com.tans.tuiutils.view.clicks
+import com.tans.tfiletransporter.utils.openFile
 import com.tans.tuiutils.view.refreshes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -77,7 +78,11 @@ class MyAppsFragment : BaseCoroutineStateFragment<MyAppsFragment.Companion.MyApp
                 itemViewBinding.appIdTv.text = data.first.packageName
                 itemViewBinding.appSizeTv.text = data.first.appSize.toSizeString()
                 itemViewBinding.appIconIv.background = data.first.icon
+                val isViewerMode = requireActivity().intent.getBooleanExtra("viewer_mode_extra_key", false)
+                if (isViewerMode) { itemViewBinding.appCb.visibility = android.view.View.GONE }
                 itemViewBinding.root.clicks(this) {
+                    if (isViewerMode) { val launchIntent = requireActivity().packageManager.getLaunchIntentForPackage(data.first.packageName)
+                        if (launchIntent != null) { requireActivity().startActivity(launchIntent) } else { android.widget.Toast.makeText(requireActivity(), "Cannot launch this app", android.widget.Toast.LENGTH_SHORT).show() }; return@clicks }
                     updateState {  oldState ->
                         val newSelected = if (oldState.selected.contains(data.first)) {
                             oldState.selected - data.first

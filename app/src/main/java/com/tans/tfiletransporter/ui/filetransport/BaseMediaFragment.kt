@@ -33,6 +33,7 @@ import com.tans.tuiutils.mediastore.queryAudioFromMediaStore
 import com.tans.tuiutils.mediastore.queryImageFromMediaStore
 import com.tans.tuiutils.mediastore.queryVideoFromMediaStore
 import com.tans.tuiutils.view.clicks
+import com.tans.tfiletransporter.utils.openUri
 import com.tans.tuiutils.view.refreshes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -88,7 +89,10 @@ abstract class BaseMediaFragment(
                                 .load(data.first.uri)
                                 .into(itemViewBinding.photoIv)
                         }
+                        val isViewerMode = requireActivity().intent.getBooleanExtra("viewer_mode_extra_key", false)
+                        if (isViewerMode) { itemViewBinding.imageCb.visibility = android.view.View.GONE }
                         itemViewBinding.root.clicks(this) {
+                            if (isViewerMode) { requireActivity().openUri(data.first.uri, "image/*"); return@clicks }
                             selectOrUnSelectImage(data.first)
                         }
                     }.addPayloadDataBinder(Unit) { data, view, _ ->
@@ -127,7 +131,10 @@ abstract class BaseMediaFragment(
                         itemViewBinding.albumTv.text = requireContext().getString(R.string.media_album_name, data.first.album)
                         itemViewBinding.modifiedDateTv.text = (data.first.dateModified * 1000L).fileDateText()
                         itemViewBinding.mediaSizeTv.text = data.first.size.toSizeString()
+                        val isViewerMode = requireActivity().intent.getBooleanExtra("viewer_mode_extra_key", false)
+                        if (isViewerMode) { itemViewBinding.mediaCb.visibility = android.view.View.GONE }
                         itemViewBinding.root.clicks(this) {
+                            if (isViewerMode) { requireActivity().openUri(data.first.uri, "audio/*"); return@clicks }
                             selectOrUnSelectAudio(data.first)
                         }
                     }.addPayloadDataBinder(Unit) { data, view, _ ->
@@ -166,7 +173,10 @@ abstract class BaseMediaFragment(
                         itemViewBinding.albumTv.visibility = View.INVISIBLE
                         itemViewBinding.modifiedDateTv.text = (data.first.dateModified * 1000L).fileDateText()
                         itemViewBinding.mediaSizeTv.text = data.first.size.toSizeString()
+                        val isViewerMode = requireActivity().intent.getBooleanExtra("viewer_mode_extra_key", false)
+                        if (isViewerMode) { itemViewBinding.mediaCb.visibility = android.view.View.GONE }
                         itemViewBinding.root.clicks(this) {
+                            if (isViewerMode) { requireActivity().openUri(data.first.uri, "video/*"); return@clicks }
                             selectOrUnSelectVideo(data.first)
                         }
                     }.addPayloadDataBinder(Unit) { data, view, _ ->

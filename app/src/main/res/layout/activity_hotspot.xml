@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/white_1">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        app:title="Local Hotspot"
+        app:titleTextColor="@color/black_1"
+        app:navigationIcon="?attr/homeAsUpIndicator"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Share Files without Router"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black_1"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="You can generate a private Wi-Fi network from this phone. Other devices can connect to it to transfer files quickly."
+            android:textSize="14sp"
+            android:textColor="@color/gray_1"
+            android:layout_marginBottom="30dp"/>
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hotspot is off."
+            android:textSize="16sp"
+            android:textColor="@color/teal_200"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:id="@+id/tv_ssid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/black_1"
+            android:textStyle="bold"
+            android:textIsSelectable="true"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:id="@+id/tv_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/black_1"
+            android:textStyle="bold"
+            android:textIsSelectable="true"
+            android:gravity="center"
+            android:layout_marginBottom="40dp"/>
+
+        <Button
+            android:id="@+id/btn_toggle_hotspot"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Start Hotspot"
+            android:textSize="18sp"
+            android:backgroundTint="@color/teal_200"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+</LinearLayout>

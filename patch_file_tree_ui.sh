@@ -1,0 +1,3 @@
+sed -i 's/itemViewBinding.root.clicks(coroutineScope) {/val isViewerMode = context.intent.getBooleanExtra("viewer_mode_extra_key", false)\n                if (isViewerMode) { itemViewBinding.fileCb.visibility = android.view.View.GONE }\n                itemViewBinding.root.clicks(coroutineScope) {\n                    if (isViewerMode) { context.openFile(java.io.File(data.first.path)); return@clicks }/' app/src/main/java/com/tans/tfiletransporter/ui/FileTreeUI.kt
+
+sed -i 's/import com.tans.tuiutils.view.clicks/import com.tans.tuiutils.view.clicks\nimport com.tans.tfiletransporter.utils.openFile/' app/src/main/java/com/tans/tfiletransporter/ui/FileTreeUI.kt

@@ -1,0 +1,3 @@
+sed -i 's/requireActivity().openFile(java.io.File(data.first.uri.path ?: ""));/requireActivity().openUri(data.first.uri, "image\/*");/' app/src/main/java/com/tans/tfiletransporter/ui/filetransport/BaseMediaFragment.kt
+sed -i 's/requireActivity().openUri(data.first.uri, "image\/*");/requireActivity().openUri(data.first.uri, "audio\/*");/' app/src/main/java/com/tans/tfiletransporter/ui/filetransport/BaseMediaFragment.kt
+sed -i 's/requireActivity().openUri(data.first.uri, "audio\/*");/requireActivity().openUri(data.first.uri, "video\/*");/' app/src/main/java/com/tans/tfiletransporter/ui/filetransport/BaseMediaFragment.kt

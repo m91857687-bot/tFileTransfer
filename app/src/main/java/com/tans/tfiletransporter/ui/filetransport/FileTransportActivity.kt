@@ -168,6 +168,11 @@ class FileTransportActivity : BaseCoroutineStateActivity<FileTransportActivity.C
     }
 
     override fun CoroutineScope.firstLaunchInitDataCoroutine() {
+        val isViewerMode = intent.getBooleanExtra("viewer_mode_extra_key", false)
+        if (isViewerMode) {
+            updateState { s -> s.copy(connectionStatus = ConnectionStatus.Connected(handshake = com.tans.tfiletransporter.transferproto.fileexplore.Handshake(java.io.File.separator))) }
+            return
+        }
         val (remoteAddress, isServer, localAddress) = with(intent) { Triple(getRemoteAddress(), getIsServer(), getLocalAddress()) }
 
 
@@ -247,10 +252,15 @@ class FileTransportActivity : BaseCoroutineStateActivity<FileTransportActivity.C
 
     override fun CoroutineScope.bindContentViewCoroutine(contentView: View) {
         val viewBinding = FileTransportActivityBinding.bind(contentView)
+        val isViewerMode = intent.getBooleanExtra("viewer_mode_extra_key", false)
+        if (isViewerMode) {
+            viewBinding.floatingActionBt.visibility = android.view.View.GONE
+            viewBinding.toolBar.title = "My Files val viewBinding = FileTransportActivityBinding.bind(contentView) Apps"
+        }
 
         // Loading dialog.
         launch {
-            this@FileTransportActivity.supportFragmentManager.loadingDialogSuspend {
+            if (!isViewerMode) this@FileTransportActivity.supportFragmentManager.loadingDialogSuspend {
                 stateFlow().map { it.connectionStatus }.first { it != ConnectionStatus.Connecting }
             }
         }
@@ -258,30 +268,34 @@ class FileTransportActivity : BaseCoroutineStateActivity<FileTransportActivity.C
         // Connection close dialog.
         launch {
             stateFlow().map { it.connectionStatus }.first { it == ConnectionStatus.Closed }
-            val d = NoOptionalDialog(
+            if (!isViewerMode) {
+                val d = NoOptionalDialog(
                 title = getString(R.string.connection_error_title),
                 message = getString(R.string.connection_error_message),
                 positiveButtonText = getString(R.string.dialog_positive)
             )
             this@FileTransportActivity.supportFragmentManager.showSimpleCancelableCoroutineResultDialogSuspend(d)
             finish()
+            }
         }
 
         launch {
             stateFlow().map { it.connectionStatus }.first { it is ConnectionStatus.Connected }
 
             // Fragments' ViewPager
-            val (remoteInfo, remoteAddress) = with(intent) { getRemoteInfo() to getRemoteAddress() }
-            viewBinding.toolBar.title = remoteInfo
-            viewBinding.toolBar.subtitle = remoteAddress.hostAddress
+            if (!isViewerMode) {
+                val (remoteInfo, remoteAddress) = with(intent) { getRemoteInfo() to getRemoteAddress() }
+                viewBinding.toolBar.title = remoteInfo
+                viewBinding.toolBar.subtitle = remoteAddress.hostAddress
+            }
 
             val fragmentsAdapter = object : NoRecycleFragmentStateAdapter(this@FileTransportActivity) {
-                override fun getItemCount(): Int = fragments.size
+                override fun getItemCount(): Int = if (isViewerMode) 5 else fragments.size
                 override fun createFragment(position: Int): Fragment = fragments[DirTabType.entries[position]]!!
             }
 
             viewBinding.viewPager.adapter = fragmentsAdapter
-            viewBinding.viewPager.offscreenPageLimit = fragments.size
+            viewBinding.viewPager.offscreenPageLimit = if (isViewerMode) 5 else fragments.size
             TabLayoutMediator(viewBinding.tabLayout, viewBinding.viewPager) { tab, position ->
                 tab.text = when (DirTabType.entries[position]) {
                     DirTabType.MyApps -> getString(R.string.file_transport_activity_tab_my_apps)

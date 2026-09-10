@@ -2,7 +2,10 @@ package com.tans.tfiletransporter.ui.connection
 
 import android.Manifest
 import android.content.Intent
-import android.net.*
+import android.content.Context
+import android.location.LocationManager
+import android.net.wifi.WifiManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -98,8 +101,44 @@ class ConnectionActivity : BaseCoroutineStateActivity<ConnectionActivity.Compani
 
                     if (grant == true) {
                         val i = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
-                        i.data = Uri.fromParts("package", packageName, null)
+                        i.data = android.net.Uri.fromParts("package", packageName, null)
                         startActivity(i)
+                    }
+                }
+                
+                // Check Location
+                val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+                val isGpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                val isNetworkLocationEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+                if (!isGpsEnabled && !isNetworkLocationEnabled) {
+                    val locDialog = OptionalDialog(
+                        title = getString(R.string.prompt_enable_location_title),
+                        message = getString(R.string.prompt_enable_location_content),
+                        positiveButtonText = getString(R.string.dialog_positive),
+                        negativeButtonText = getString(R.string.dialog_negative)
+                    )
+                    val grantLoc = this@ConnectionActivity.supportFragmentManager.showSimpleCancelableCoroutineResultDialogSuspend(locDialog)
+                    if (grantLoc == true) {
+                        startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                    }
+                }
+                
+                // Check Wi-Fi
+                val wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+                if (!wifiManager.isWifiEnabled) {
+                    val wifiDialog = OptionalDialog(
+                        title = getString(R.string.prompt_enable_wifi_title),
+                        message = getString(R.string.prompt_enable_wifi_content),
+                        positiveButtonText = getString(R.string.dialog_positive),
+                        negativeButtonText = getString(R.string.dialog_negative)
+                    )
+                    val grantWifi = this@ConnectionActivity.supportFragmentManager.showSimpleCancelableCoroutineResultDialogSuspend(wifiDialog)
+                    if (grantWifi == true) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                            startActivity(Intent(Settings.Panel.ACTION_WIFI))
+                        } else {
+                            startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
+                        }
                     }
                 }
             }.onFailure {
@@ -109,6 +148,11 @@ class ConnectionActivity : BaseCoroutineStateActivity<ConnectionActivity.Compani
 
         viewBinding.toolBar.menu.findItem(R.id.settings).setOnMenuItemClickListener {
             this@ConnectionActivity.supportFragmentManager.showSettingsDialog()
+            true
+        }
+
+        viewBinding.toolBar.menu.findItem(R.id.create_hotspot).setOnMenuItemClickListener {
+            startActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.connection.HotspotActivity::class.java))
             true
         }
 
@@ -152,6 +196,12 @@ class ConnectionActivity : BaseCoroutineStateActivity<ConnectionActivity.Compani
         }
         viewBinding.dropRequestShareBt.clicks(this) {
             updateState { it.copy(requestShareFiles = emptyList()) }
+        }
+
+        viewBinding.myFilesBtn.setOnClickListener {
+            val i = Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.filetransport.FileTransportActivity::class.java)
+            i.putExtra("viewer_mode_extra_key", true)
+            startActivity(i)
         }
     }
 

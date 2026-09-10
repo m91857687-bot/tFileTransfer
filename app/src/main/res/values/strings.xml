@@ -96,6 +96,10 @@
     <!--region RequestPermission-->
     <string name="permission_request_title">Request Permission</string>
     <string name="permission_storage_request_content">tFileTransfer needs MANAGE STORAGE permission to share your files.</string>
+    <string name="prompt_enable_location_title">Enable Location</string>
+    <string name="prompt_enable_location_content">Location services must be enabled to discover nearby devices via Wi-Fi Direct. Please enable Location in Settings.</string>
+    <string name="prompt_enable_wifi_title">Enable Wi-Fi</string>
+    <string name="prompt_enable_wifi_content">Wi-Fi must be enabled to connect and transfer files. Please enable Wi-Fi.</string>
     <!--endregion-->
 
     <!--region FolderSelectActivity-->

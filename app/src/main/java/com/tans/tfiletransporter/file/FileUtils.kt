@@ -110,6 +110,25 @@ fun List<FileLeaf.CommonFileLeaf>.toExploreFiles(): List<FileExploreFile> {
     }
 }
 
+fun extractFilesFromDir(dir: File): List<FileExploreFile> {
+    val result = mutableListOf<FileExploreFile>()
+    if (dir.isDirectory && dir.canRead()) {
+        val children = dir.listFiles() ?: emptyArray<File>()
+        for (c in children) {
+            if (c.canRead()) {
+                if (c.isDirectory) {
+                    result.addAll(extractFilesFromDir(c))
+                } else {
+                    if (c.length() > 0) {
+                        result.add(c.toFileExploreFile())
+                    }
+                }
+            }
+        }
+    }
+    return result
+}
+
 fun File.hasTargetParent(targetParent: File): Boolean {
     return if (canonicalPath == targetParent.canonicalPath) {
         true

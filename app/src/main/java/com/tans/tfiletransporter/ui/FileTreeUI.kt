@@ -13,6 +13,7 @@ import com.tans.tfiletransporter.file.FileLeaf
 import com.tans.tfiletransporter.file.FileTree
 import com.tans.tfiletransporter.file.fileDateText
 import com.tans.tfiletransporter.file.isRootFileTree
+import com.tans.tfiletransporter.file.extractFilesFromDir
 import com.tans.tfiletransporter.toSizeString
 import com.tans.tfiletransporter.ui.commomdialog.loadingDialogSuspend
 import com.tans.tfiletransporter.utils.dp2px
@@ -25,6 +26,7 @@ import com.tans.tuiutils.adapter.impl.datasources.DataSourceImpl
 import com.tans.tuiutils.adapter.impl.viewcreatators.SingleItemViewCreatorImpl
 import com.tans.tuiutils.state.CoroutineState
 import com.tans.tuiutils.view.clicks
+import com.tans.tfiletransporter.utils.openFile
 import com.tans.tuiutils.view.refreshes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -109,7 +111,10 @@ class FileTreeUI(
                 itemViewBinding.modifiedDateTv.text = data.first.lastModified.fileDateText()
                 itemViewBinding.filesSizeTv.text = data.first.size.toSizeString()
 
+                val isViewerMode = context.intent.getBooleanExtra("viewer_mode_extra_key", false)
+                if (isViewerMode) { itemViewBinding.fileCb.visibility = android.view.View.GONE }
                 itemViewBinding.root.clicks(coroutineScope) {
+                    if (isViewerMode) { context.openFile(java.io.File(data.first.path)); return@clicks }
                     val currentFile = data.first
                     val selectedFiles = currentState().selectedFiles
                     val newSelectedFiles = if (selectedFiles.contains(currentFile)) {
@@ -180,6 +185,20 @@ class FileTreeUI(
         popupMenu.inflate(R.menu.folder_menu)
 
         popupMenu.setOnMenuItemClickListener {
+            val itemId = it.itemId
+            if (itemId == R.id.send_folder) {
+                // Return selected folder to the activity to send
+                val currentTree = currentState().fileTree
+                if (currentTree is FileTree) {
+                    val folderExploreFiles = extractFilesFromDir(java.io.File(currentTree.path))
+                    // Select all files in this folder using Coroutine scope and explore tree logic
+                    // We'll update the state to have selected files include ALL files recursively,
+                    // but since fileTreeLeafs only show the current folder, we'll just return it.
+                    updateState { s -> s.copy(selectedFiles = folderExploreFiles.map { f -> FileLeaf.CommonFileLeaf(f.name, f.path, f.lastModify, f.size) }) }
+                }
+                return@setOnMenuItemClickListener true
+            }
+
             updateState { oldState ->
                 val tree = oldState.fileTree
                 when (it.itemId) {
