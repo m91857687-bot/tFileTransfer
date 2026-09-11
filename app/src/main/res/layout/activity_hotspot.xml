@@ -79,14 +79,34 @@
             android:layout_marginBottom="20dp"
             android:visibility="gone"/>
 
-        <Button
-            android:id="@+id/btn_toggle_hotspot"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="Start Hotspot"
-            android:textSize="18sp"
-            android:backgroundTint="@color/teal_200"
-            android:textColor="@color/white"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/btn_toggle_hotspot"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="Start Hotspot"
+                android:textSize="16sp"
+                android:backgroundTint="@color/teal_200"
+                android:textColor="@color/white"/>
+
+            <Button
+                android:id="@+id/btn_scan_qr"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="Scan to Connect"
+                android:textSize="16sp"
+                android:backgroundTint="@color/teal_700"
+                android:textColor="@color/white"/>
+        </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>

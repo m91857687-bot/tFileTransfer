@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.tans.tfiletransporter.logs.AndroidLog
 
-enum class GameType { NONE, TICTACTOE, CONNECT4, CHESS }
+enum class GameType { NONE, TICTACTOE, CONNECT4, OTHELLO }
 
 @Composable
 fun GamesScreen(activity: FileTransportActivity) {
@@ -37,7 +37,7 @@ fun GamesScreen(activity: FileTransportActivity) {
                 when(game) {
                     "TICTACTOE" -> currentGame = GameType.TICTACTOE
                     "CONNECT4" -> currentGame = GameType.CONNECT4
-                    "CHESS" -> currentGame = GameType.CHESS
+                    "OTHELLO" -> currentGame = GameType.OTHELLO
                 }
             } else if (jsonStr == "EXIT_GAME") {
                 currentGame = GameType.NONE
@@ -68,10 +68,10 @@ fun GamesScreen(activity: FileTransportActivity) {
             }
             Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = { 
-                currentGame = GameType.CHESS
-                sendGameEvent("START_GAME:CHESS")
+                currentGame = GameType.OTHELLO
+                sendGameEvent("START_GAME:OTHELLO")
             }, modifier = Modifier.fillMaxWidth(0.6f)) {
-                Text("Chess")
+                Text("Othello (Reversi)")
             }
         }
     } else {
@@ -86,7 +86,7 @@ fun GamesScreen(activity: FileTransportActivity) {
                 when (currentGame) {
                     GameType.TICTACTOE -> TicTacToeGame(activity.gameEventFlow, sendGameEvent)
                     GameType.CONNECT4 -> Connect4Game(activity.gameEventFlow, sendGameEvent)
-                    GameType.CHESS -> ChessGame(activity.gameEventFlow, sendGameEvent)
+                    GameType.OTHELLO -> OthelloGame(activity.gameEventFlow, sendGameEvent)
                     else -> {}
                 }
             }
