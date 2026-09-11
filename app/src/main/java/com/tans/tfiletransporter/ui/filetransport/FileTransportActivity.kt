@@ -64,7 +64,9 @@ import java.lang.ref.WeakReference
 import java.util.ArrayList
 import java.util.concurrent.atomic.AtomicReference
 import kotlin.math.min
-
+import com.tans.tuiutils.mediastore.queryImageFromMediaStore
+import com.tans.tuiutils.mediastore.queryVideoFromMediaStore
+import com.tans.tuiutils.mediastore.queryAudioFromMediaStore
 
 @SystemBarStyle(statusBarThemeStyle = 1, navigationBarThemeStyle = 1)
 class FileTransportActivity : BaseCoroutineStateActivity<FileTransportActivity.Companion.FileTransportActivityState>(
@@ -344,6 +346,68 @@ class FileTransportActivity : BaseCoroutineStateActivity<FileTransportActivity.C
             // Setting's dialog.
             viewBinding.toolBar.menu.findItem(R.id.settings).setOnMenuItemClickListener {
                 this@FileTransportActivity.supportFragmentManager.showSettingsDialog()
+                true
+            }
+            
+            viewBinding.toolBar.menu.findItem(R.id.create_hotspot)?.isVisible = false
+            viewBinding.toolBar.menu.findItem(R.id.history)?.isVisible = false
+            viewBinding.toolBar.menu.findItem(R.id.web_share)?.isVisible = false
+
+            viewBinding.toolBar.menu.findItem(R.id.instructions)?.setOnMenuItemClickListener {
+                com.tans.tfiletransporter.ui.instructions.InstructionsDialog().show(supportFragmentManager, "InstructionsDialog")
+                true
+            }
+
+            viewBinding.toolBar.menu.findItem(R.id.clone_phone)?.setOnMenuItemClickListener {
+                launch {
+                    val d = OptionalDialog(
+                        title = getString(R.string.clone_phone_title),
+                        message = "This will gather all Apps, Images, Videos, and Audios to transfer to the connected device. Proceed?",
+                        positiveButtonText = "OK",
+                        negativeButtonText = "Cancel"
+                    )
+                    val confirm = supportFragmentManager.showSimpleCancelableCoroutineResultDialogSuspend(d)
+                    if (confirm == true) {
+                        runCatching {
+                            val exploreFiles = supportFragmentManager.loadingDialogSuspend {
+                                val allFiles = mutableListOf<File>()
+                                
+                                withContext(Dispatchers.IO) {
+                                    // 1. Apps
+                                    val pm = packageManager
+                                    pm.getInstalledApplications(0)
+                                        .filter { it.flags and android.content.pm.ApplicationInfo.FLAG_SYSTEM == 0 && java.nio.file.Files.isReadable(java.nio.file.Paths.get(it.sourceDir)) }
+                                        .forEach { allFiles.add(File(it.sourceDir)) }
+                                    
+                                    // 2. Images
+                                    val images = this@FileTransportActivity.queryImageFromMediaStore()
+                                    images.forEach { it.file?.let { file -> allFiles.add(file) } }
+                                    
+                                    // 3. Videos
+                                    val videos = this@FileTransportActivity.queryVideoFromMediaStore()
+                                    videos.forEach { it.file?.let { file -> allFiles.add(file) } }
+                                    
+                                    // 4. Audios
+                                    val audios = this@FileTransportActivity.queryAudioFromMediaStore()
+                                    audios.forEach { it.file?.let { file -> allFiles.add(file) } }
+                                }
+                                
+                                allFiles.filter { it.exists() && it.isFile }.map { f ->
+                                    FileExploreFile(
+                                        name = f.name,
+                                        path = f.path,
+                                        size = f.length(),
+                                        lastModify = f.lastModified()
+                                    )
+                                }
+                            }
+                            
+                            if (exploreFiles.isNotEmpty()) {
+                                fileExplore.requestSendFilesSuspend(exploreFiles, Settings.transferFileMaxConnection())
+                            }
+                        }
+                    }
+                }
                 true
             }
 

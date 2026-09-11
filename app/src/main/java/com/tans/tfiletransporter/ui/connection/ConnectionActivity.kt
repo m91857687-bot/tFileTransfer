@@ -166,6 +166,13 @@ class ConnectionActivity : BaseCoroutineStateActivity<ConnectionActivity.Compani
             true
         }
 
+        viewBinding.toolBar.menu.findItem(R.id.clone_phone)?.isVisible = false
+
+        viewBinding.toolBar.menu.findItem(R.id.instructions)?.setOnMenuItemClickListener {
+            com.tans.tfiletransporter.ui.instructions.InstructionsDialog().show(supportFragmentManager, "InstructionsDialog")
+            true
+        }
+
         val tcWifiP2p = supportFragmentManager.beginTransaction()
         if (supportFragmentManager.findFragmentByTag(WIFI_P2P_CONNECTION_FRAGMENT_TAG) == null) {
             tcWifiP2p.add(R.id.wifi_p2p_fragment_container, wifiP2pFragment, WIFI_P2P_CONNECTION_FRAGMENT_TAG)

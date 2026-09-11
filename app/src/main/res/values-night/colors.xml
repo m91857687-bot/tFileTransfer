@@ -8,18 +8,18 @@
 
     <!-- Dark mode remapping -->
     <color name="black">#FFFFFFFF</color>
-    <color name="white">#FF121212</color>
+    <color name="white">#FF000000</color>
     
-    <color name="white_1">#FF1E1E1E</color>
+    <color name="white_1">#FF000000</color>
     
     <color name="black_1">#FFCCCCCC</color>
     <color name="black_2">#FFAAAAAA</color>
     
     <color name="gray_1">#FF888888</color>
-    <color name="gray_2">#FF2A2A2A</color>
+    <color name="gray_2">#FF111111</color>
     <color name="gray_3">#FF666666</color>
     
-    <color name="line_color">#FF333333</color>
+    <color name="line_color">#FF222222</color>
     
     <color name="md_dialog_title_color">#FFFFFFFF</color>
 </resources>

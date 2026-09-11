@@ -134,4 +134,7 @@
     <string name="web_share_failed">Failed to start Web Share</string>
     <!--endregion-->
 
+    <string name="clone_phone_title">Clone Phone (Transfer All Media &amp; Apps)</string>
+    <string name="instructions_title">Instructions</string>
+    <string name="instructions_desc">This app was designed and programmed to give you the fastest, lightest, and easiest file transfer experience.\n\nHow to Use:\n1. Connect via Wi-Fi Direct or Hotspot.\n2. In Hotspot mode, just scan the QR code to connect instantly.\n3. Browse files and transfer at maximum speed.\n\nGreetings from the developer Mohammed Hisham Al-Salahi</string>
 </resources>

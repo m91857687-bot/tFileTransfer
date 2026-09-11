@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <item android:id="@+id/create_hotspot"
           android:title="Hotspot"
           android:icon="@drawable/ic_wifi_tethering"
           app:showAsAction="ifRoom"/>
-
     <item android:id="@+id/history"
           android:title="@string/history_title"
           android:icon="@drawable/ic_history"
           app:showAsAction="ifRoom"/>
-
     <item android:id="@+id/web_share"
           android:title="@string/web_share_title"
           android:icon="@drawable/ic_web"
           app:showAsAction="ifRoom"/>
-
+    <item android:id="@+id/clone_phone"
+          android:title="@string/clone_phone_title"
+          app:showAsAction="never"/>
+    <item android:id="@+id/instructions"
+          android:title="@string/instructions_title"
+          app:showAsAction="never"/>
     <item android:id="@+id/settings"
           android:title="@string/settings_title"
           android:icon="@drawable/ic_settings"
