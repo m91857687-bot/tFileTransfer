@@ -8,12 +8,16 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.tans.tfiletransporter.R
 import com.tans.tfiletransporter.logs.AndroidLog
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import net.glxn.qrgen.android.QRCode
 
 class HotspotActivity : AppCompatActivity() {
 
@@ -24,6 +28,7 @@ class HotspotActivity : AppCompatActivity() {
         val tvSsid: TextView = findViewById(R.id.tv_ssid)
         val tvPassword: TextView = findViewById(R.id.tv_password)
         val btnToggle: Button = findViewById(R.id.btn_toggle_hotspot)
+        val ivQrCode: ImageView = findViewById(R.id.iv_qr_code)
         
         val wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
 
@@ -35,20 +40,33 @@ class HotspotActivity : AppCompatActivity() {
                         tvSsid.text = ""
                         tvPassword.text = ""
                         btnToggle.text = "Start Hotspot"
+                        ivQrCode.visibility = View.GONE
                     }
                     is HotspotState.Starting -> {
                         tvStatus.text = "Starting hotspot..."
                         btnToggle.text = "Starting..."
+                        ivQrCode.visibility = View.GONE
                     }
                     is HotspotState.Started -> {
                         tvStatus.text = "Hotspot is ACTIVE"
                         tvSsid.text = "Network Name (SSID): ${state.ssid}"
                         tvPassword.text = "Password: ${state.pass}"
                         btnToggle.text = "Stop Hotspot"
+                        try {
+                            val qrString = "WIFI:T:WPA;S:${state.ssid};P:${state.pass};;"
+                            val bitmap = withContext(Dispatchers.IO) {
+                                QRCode.from(qrString).withSize(400, 400).bitmap()
+                            }
+                            ivQrCode.setImageBitmap(bitmap)
+                            ivQrCode.visibility = View.VISIBLE
+                        } catch (e: Exception) {
+                            AndroidLog.e("HotspotActivity", "Error generating QR: ${e.message}")
+                        }
                     }
                     is HotspotState.Error -> {
                         tvStatus.text = "Failed to start hotspot. Error code: ${state.reason}"
                         btnToggle.text = "Start Hotspot"
+                        ivQrCode.visibility = View.GONE
                     }
                 }
             }

@@ -13,6 +13,7 @@
     <string name="file_transport_activity_tab_my_dir">MY FOLDER</string>
     <string name="file_transport_activity_tab_remote_dir">REMOTE FOLDER</string>
     <string name="file_transport_activity_tab_message">MESSAGE</string>
+    <string name="file_transport_activity_tab_games">GAMES</string>
     <string name="file_count">%d files</string>
     <string name="connection_error_title">Connection Error</string>
     <string name="connection_error_message">Connection is closed, please reconnect.</string>

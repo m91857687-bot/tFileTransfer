@@ -87,6 +87,10 @@ class FileTransportActivity : BaseCoroutineStateActivity<FileTransportActivity.C
         MutableSharedFlow(onBufferOverflow = BufferOverflow.DROP_OLDEST, extraBufferCapacity = 1)
     }
 
+    val gameEventFlow: MutableSharedFlow<String> by lazyViewModelField("gameEventFlow") {
+        MutableSharedFlow(onBufferOverflow = BufferOverflow.DROP_OLDEST, extraBufferCapacity = 10)
+    }
+
     /**
      * Remote device request scan current device's dir.
      */
@@ -163,7 +167,8 @@ class FileTransportActivity : BaseCoroutineStateActivity<FileTransportActivity.C
             DirTabType.MyAudios to MyAudiosFragment(),
             DirTabType.MyDir to MyDirFragment(),
             DirTabType.RemoteDir to RemoteDirFragment(),
-            DirTabType.Message to MessageFragment()
+            DirTabType.Message to MessageFragment(),
+            DirTabType.Games to GamesFragment()
         )
     }
 
@@ -224,6 +229,12 @@ class FileTransportActivity : BaseCoroutineStateActivity<FileTransportActivity.C
                                 override fun onNewState(state: FileExploreState) {}
                                 // New message coming.
                                 override fun onNewMsg(msg: SendMsgReq) {
+                                    if (msg.msg.startsWith("[GAME_EVENT]:")) {
+                                        launch(Dispatchers.Main) {
+                                            gameEventFlow.emit(msg.msg.removePrefix("[GAME_EVENT]:"))
+                                        }
+                                        return
+                                    }
                                     updateNewMessage(
                                         Message(
                                             time = msg.sendTime,
@@ -305,6 +316,7 @@ class FileTransportActivity : BaseCoroutineStateActivity<FileTransportActivity.C
                     DirTabType.MyDir -> getString(R.string.file_transport_activity_tab_my_dir)
                     DirTabType.RemoteDir -> getString(R.string.file_transport_activity_tab_remote_dir)
                     DirTabType.Message -> getString(R.string.file_transport_activity_tab_message)
+                    DirTabType.Games -> getString(R.string.file_transport_activity_tab_games)
                 }
             }.attach()
             viewBinding.tabLayout.addOnTabSelectedListener(object :
@@ -318,6 +330,7 @@ class FileTransportActivity : BaseCoroutineStateActivity<FileTransportActivity.C
                         DirTabType.MyDir.ordinal -> updateState { it.copy(selectedTabType = DirTabType.MyDir) }
                         DirTabType.RemoteDir.ordinal -> updateState { it.copy(selectedTabType = DirTabType.RemoteDir) }
                         DirTabType.Message.ordinal -> updateState { it.copy(selectedTabType = DirTabType.Message) }
+                        DirTabType.Games.ordinal -> updateState { it.copy(selectedTabType = DirTabType.Games) }
                     }
                 }
 
@@ -342,7 +355,7 @@ class FileTransportActivity : BaseCoroutineStateActivity<FileTransportActivity.C
                         lpCollapsing?.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL or AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS
                         viewBinding.collapsingLayout.layoutParams = lpCollapsing
                     }
-                    DirTabType.Message -> {
+                    DirTabType.Message, DirTabType.Games -> {
                         val lpCollapsing = (viewBinding.collapsingLayout.layoutParams as? AppBarLayout.LayoutParams)
                         lpCollapsing?.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_NO_SCROLL
                         viewBinding.collapsingLayout.layoutParams = lpCollapsing
@@ -358,7 +371,7 @@ class FileTransportActivity : BaseCoroutineStateActivity<FileTransportActivity.C
                         viewBinding.floatingActionBt.setImageResource(R.drawable.download_outline)
                         viewBinding.floatingActionBt.visibility = View.VISIBLE
                     }
-                    DirTabType.Message -> {
+                    DirTabType.Message, DirTabType.Games -> {
                         viewBinding.floatingActionBt.visibility = View.GONE
                     }
                 }
@@ -562,7 +575,8 @@ class FileTransportActivity : BaseCoroutineStateActivity<FileTransportActivity.C
             MyAudios,
             MyDir,
             RemoteDir,
-            Message
+            Message,
+            Games
         }
 
         sealed class ConnectionStatus {
