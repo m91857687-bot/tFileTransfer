@@ -120,22 +120,18 @@
             android:orientation="horizontal"
             android:gravity="end">
 
-            <com.google.android.material.button.MaterialButton
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_extract_apk"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
                 android:textSize="12sp"
-                app:strokeColor="@color/teal_200"
+                android:background="@drawable/common_line_button_color_bg"
                 android:textColor="@color/teal_200"
-                app:icon="@drawable/ic_download"
-                app:iconSize="16dp"
-                app:iconTint="@color/teal_200"
                 android:text="@string/apk_extract_btn" />
 
-            <com.google.android.material.button.MaterialButton
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_send_barcode"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
@@ -143,11 +139,9 @@
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
                 android:textSize="12sp"
+                android:background="@drawable/common_line_button_color_bg"
                 android:backgroundTint="@color/teal_200"
                 android:textColor="@color/white"
-                app:icon="@drawable/send"
-                app:iconSize="16dp"
-                app:iconTint="@color/white"
                 android:text="@string/apk_send_barcode" />
 
         </LinearLayout>

@@ -98,38 +98,42 @@ class ApkExtractorActivity : AppCompatActivity() {
         binding.rvApps.visibility = View.GONE
 
         lifecycleScope.launch(Dispatchers.IO) {
-            val pm = packageManager
-            val packages = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                pm.getInstalledPackages(PackageManager.PackageInfoFlags.of(0))
-            } else {
-                @Suppress("DEPRECATION")
-                pm.getInstalledPackages(0)
-            }
-
             val list = mutableListOf<AppItem>()
-            for (pkg in packages) {
-                val appInfo = pkg.applicationInfo ?: continue
-                val isSystem = (appInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0
-                val label = pm.getApplicationLabel(appInfo).toString()
-                val sourceDir = appInfo.sourceDir
-                val file = File(sourceDir)
-                val size = if (file.exists()) file.length() else 0L
-                val versionName = pkg.versionName ?: "1.0"
+            try {
+                val pm = packageManager
+                val packages = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    pm.getInstalledPackages(PackageManager.PackageInfoFlags.of(0))
+                } else {
+                    @Suppress("DEPRECATION")
+                    pm.getInstalledPackages(0)
+                }
 
-                list.add(
-                    AppItem(
-                        appInfo = appInfo,
-                        name = label,
-                        packageName = pkg.packageName,
-                        versionName = versionName,
-                        size = size,
-                        sourceDir = sourceDir,
-                        isSystemApp = isSystem
+                for (pkg in packages) {
+                    val appInfo = pkg.applicationInfo ?: continue
+                    val isSystem = (appInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0
+                    val label = try { pm.getApplicationLabel(appInfo).toString() } catch (_: Exception) { pkg.packageName }
+                    val sourceDir = appInfo.sourceDir
+                    val file = File(sourceDir)
+                    val size = if (file.exists()) file.length() else 0L
+                    val versionName = pkg.versionName ?: "1.0"
+
+                    list.add(
+                        AppItem(
+                            appInfo = appInfo,
+                            name = label,
+                            packageName = pkg.packageName,
+                            versionName = versionName,
+                            size = size,
+                            sourceDir = sourceDir,
+                            isSystemApp = isSystem
+                        )
                     )
-                )
-            }
+                }
 
-            list.sortBy { it.name.lowercase(Locale.ROOT) }
+                list.sortBy { it.name.lowercase(Locale.ROOT) }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
 
             withContext(Dispatchers.Main) {
                 allApps.clear()
@@ -317,10 +321,11 @@ class ApkExtractorActivity : AppCompatActivity() {
             b.tvAppVersion.text = "v${item.versionName}"
             b.tvAppSize.text = item.size.toSizeString()
 
-            Glide.with(this@ApkExtractorActivity)
-                .load(item.appInfo)
-                .placeholder(R.drawable.ic_apk)
-                .into(b.ivAppIcon)
+            try {
+                b.ivAppIcon.setImageDrawable(item.appInfo.loadIcon(packageManager))
+            } catch (_: Exception) {
+                b.ivAppIcon.setImageResource(R.drawable.ic_apk)
+            }
 
             b.cbSelectApp.setOnCheckedChangeListener(null)
             b.cbSelectApp.isChecked = item.isSelected

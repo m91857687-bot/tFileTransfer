@@ -146,8 +146,8 @@ class VaultActivity : AppCompatActivity() {
 
     private fun updatePinDots() {
         val dots = listOf(binding.dot1, binding.dot2, binding.dot3, binding.dot4)
-        val filledColor = getColor(R.color.teal_200)
-        val emptyBg = getDrawable(R.drawable.common_line_button_color_bg)
+        val filledColor = androidx.core.content.ContextCompat.getColor(this, R.color.teal_200)
+        val emptyBg = androidx.core.content.ContextCompat.getDrawable(this, R.drawable.common_line_button_color_bg)
 
         dots.forEachIndexed { index, dot ->
             if (index < enteredPin.length) {
@@ -232,8 +232,8 @@ class VaultActivity : AppCompatActivity() {
 
     private fun setTab(tab: TabType) {
         selectedTab = tab
-        val activeColor = getColor(R.color.teal_200)
-        val normalColor = getColor(R.color.black_1)
+        val activeColor = androidx.core.content.ContextCompat.getColor(this, R.color.teal_200)
+        val normalColor = androidx.core.content.ContextCompat.getColor(this, R.color.black_1)
 
         binding.tabAll.setTextColor(if (tab == TabType.ALL) activeColor else normalColor)
         binding.tabPhotos.setTextColor(if (tab == TabType.PHOTOS) activeColor else normalColor)

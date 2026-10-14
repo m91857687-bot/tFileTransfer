@@ -95,10 +95,10 @@ class NetworkSpeedActivity : AppCompatActivity() {
 
                 if (freq >= 4900) {
                     binding.tvFreqVal.text = "5.0 GHz"
-                    binding.tvFreqVal.setTextColor(getColor(R.color.teal_200))
+                    binding.tvFreqVal.setTextColor(androidx.core.content.ContextCompat.getColor(this@NetworkSpeedActivity, R.color.teal_200))
                 } else if (freq > 0) {
                     binding.tvFreqVal.text = "2.4 GHz"
-                    binding.tvFreqVal.setTextColor(getColor(R.color.black_1))
+                    binding.tvFreqVal.setTextColor(androidx.core.content.ContextCompat.getColor(this@NetworkSpeedActivity, R.color.black_1))
                 } else {
                     binding.tvFreqVal.text = "5.0 / 2.4 GHz"
                 }
@@ -112,19 +112,19 @@ class NetworkSpeedActivity : AppCompatActivity() {
                 when {
                     rssi >= -55 -> {
                         qualityText = getString(R.string.network_speed_excellent)
-                        qualityColor = getColor(R.color.teal_200)
+                        qualityColor = androidx.core.content.ContextCompat.getColor(this@NetworkSpeedActivity, R.color.teal_200)
                     }
                     rssi >= -70 -> {
                         qualityText = getString(R.string.network_speed_good)
-                        qualityColor = getColor(R.color.teal_200)
+                        qualityColor = androidx.core.content.ContextCompat.getColor(this@NetworkSpeedActivity, R.color.teal_200)
                     }
                     rssi >= -80 -> {
                         qualityText = getString(R.string.network_speed_fair)
-                        qualityColor = getColor(R.color.gray_2)
+                        qualityColor = androidx.core.content.ContextCompat.getColor(this@NetworkSpeedActivity, R.color.gray_2)
                     }
                     else -> {
                         qualityText = getString(R.string.network_speed_weak)
-                        qualityColor = getColor(R.color.gray_2)
+                        qualityColor = androidx.core.content.ContextCompat.getColor(this@NetworkSpeedActivity, R.color.gray_2)
                     }
                 }
                 binding.tvSignalQuality.text = qualityText

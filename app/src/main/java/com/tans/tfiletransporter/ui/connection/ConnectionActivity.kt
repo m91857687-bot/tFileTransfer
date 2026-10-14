@@ -173,22 +173,22 @@ class ConnectionActivity : BaseCoroutineStateActivity<ConnectionActivity.Compani
         }
 
         viewBinding.toolBar.menu.findItem(R.id.cleaner)?.setOnMenuItemClickListener {
-            startActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.cleaner.CleanerActivity::class.java))
+            safeStartActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.cleaner.CleanerActivity::class.java))
             true
         }
 
         viewBinding.toolBar.menu.findItem(R.id.apk_extractor)?.setOnMenuItemClickListener {
-            startActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.apkextractor.ApkExtractorActivity::class.java))
+            safeStartActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.apkextractor.ApkExtractorActivity::class.java))
             true
         }
 
         viewBinding.toolBar.menu.findItem(R.id.network_speed)?.setOnMenuItemClickListener {
-            startActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.networkspeed.NetworkSpeedActivity::class.java))
+            safeStartActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.networkspeed.NetworkSpeedActivity::class.java))
             true
         }
 
         viewBinding.toolBar.menu.findItem(R.id.vault)?.setOnMenuItemClickListener {
-            startActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.vault.VaultActivity::class.java))
+            safeStartActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.vault.VaultActivity::class.java))
             true
         }
 
@@ -233,16 +233,16 @@ class ConnectionActivity : BaseCoroutineStateActivity<ConnectionActivity.Compani
 
         viewBinding.cardFileManager.setOnClickListener { openFileManager(0) }
         viewBinding.cardCleaner.setOnClickListener {
-            startActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.cleaner.CleanerActivity::class.java))
+            safeStartActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.cleaner.CleanerActivity::class.java))
         }
         viewBinding.cardApkExtractor.setOnClickListener {
-            startActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.apkextractor.ApkExtractorActivity::class.java))
+            safeStartActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.apkextractor.ApkExtractorActivity::class.java))
         }
         viewBinding.cardNetworkSpeed.setOnClickListener {
-            startActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.networkspeed.NetworkSpeedActivity::class.java))
+            safeStartActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.networkspeed.NetworkSpeedActivity::class.java))
         }
         viewBinding.cardVault.setOnClickListener {
-            startActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.vault.VaultActivity::class.java))
+            safeStartActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.vault.VaultActivity::class.java))
         }
         viewBinding.btnCategoryApps.setOnClickListener { openFileManager(0) }
         viewBinding.btnCategoryImages.setOnClickListener { openFileManager(1) }
@@ -255,7 +255,16 @@ class ConnectionActivity : BaseCoroutineStateActivity<ConnectionActivity.Compani
         val intent = Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.filemanager.FileManagerActivity::class.java).apply {
             putExtra(com.tans.tfiletransporter.ui.filemanager.FileManagerActivity.EXTRA_INITIAL_TAB, initialTab)
         }
-        startActivity(intent)
+        safeStartActivity(intent)
+    }
+
+    private fun safeStartActivity(intent: Intent) {
+        try {
+            startActivity(intent)
+        } catch (e: Exception) {
+            AndroidLog.e(TAG, "Failed to start activity: ${e.message}", e)
+            android.widget.Toast.makeText(this@ConnectionActivity, "Cannot open: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onNewIntent(intent: Intent) {

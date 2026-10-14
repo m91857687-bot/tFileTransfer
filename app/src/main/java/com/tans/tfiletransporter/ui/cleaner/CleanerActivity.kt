@@ -77,58 +77,62 @@ class CleanerActivity : AppCompatActivity() {
             val largeFiles = mutableListOf<CleanerFile>()
             val duplicateFiles = mutableListOf<CleanerFile>()
 
-            // 1. App internal and external caches
-            fun scanCacheDir(dir: File?) {
-                if (dir == null || !dir.exists()) return
-                dir.walkTopDown().maxDepth(3).forEach { f ->
-                    if (f.isFile && f.length() > 0) {
-                        cacheFiles.add(CleanerFile(f, f.name, f.length()))
+            try {
+                // 1. App internal and external caches
+                fun scanCacheDir(dir: File?) {
+                    if (dir == null || !dir.exists()) return
+                    dir.walkTopDown().maxDepth(3).forEach { f ->
+                        if (f.isFile && f.length() > 0) {
+                            cacheFiles.add(CleanerFile(f, f.name, f.length()))
+                        }
                     }
                 }
-            }
-            scanCacheDir(cacheDir)
-            scanCacheDir(externalCacheDir)
+                scanCacheDir(cacheDir)
+                scanCacheDir(externalCacheDir)
 
-            // 2. Storage scan
-            val storageRoot = Environment.getExternalStorageDirectory()
-            if (storageRoot != null && storageRoot.exists() && storageRoot.canRead()) {
-                val targets = listOf(
-                    File(storageRoot, "Download"),
-                    File(storageRoot, "DCIM/.thumbnails"),
-                    File(storageRoot, "Pictures/.thumbnails"),
-                    File(storageRoot, "Movies/.thumbnails"),
-                    File(storageRoot, "Android/data/${packageName}/cache"),
-                    File(storageRoot, "Android/media/${packageName}")
-                )
+                // 2. Storage scan
+                val storageRoot = Environment.getExternalStorageDirectory()
+                if (storageRoot != null && storageRoot.exists() && storageRoot.canRead()) {
+                    val targets = listOf(
+                        File(storageRoot, "Download"),
+                        File(storageRoot, "DCIM/.thumbnails"),
+                        File(storageRoot, "Pictures/.thumbnails"),
+                        File(storageRoot, "Movies/.thumbnails"),
+                        File(storageRoot, "Android/data/${packageName}/cache"),
+                        File(storageRoot, "Android/media/${packageName}")
+                    )
 
-                for (target in targets) {
-                    if (target.exists()) {
-                        target.walkTopDown().maxDepth(4).forEach { f ->
-                            val nameLower = f.name.lowercase(Locale.ROOT)
-                            if (f.isDirectory) {
-                                val children = f.listFiles()
-                                if (children != null && children.isEmpty() && !f.name.startsWith(".")) {
-                                    emptyFolders.add(CleanerFile(f, f.name, 0L))
-                                }
-                            } else if (f.isFile) {
-                                if (nameLower.endsWith(".apk")) {
-                                    apkFiles.add(CleanerFile(f, f.name, f.length()))
-                                } else if (nameLower.endsWith(".tmp") || nameLower.endsWith(".temp") ||
-                                    nameLower.endsWith(".log") || nameLower.endsWith(".bak") ||
-                                    nameLower.contains(".thumb")
-                                ) {
-                                    cacheFiles.add(CleanerFile(f, f.name, f.length()))
-                                } else if (nameLower.contains("(1)") || nameLower.contains("(2)") ||
-                                    nameLower.contains("_copy") || nameLower.contains("-copy")
-                                ) {
-                                    duplicateFiles.add(CleanerFile(f, f.name, f.length()))
-                                } else if (f.length() > 50L * 1024 * 1024) {
-                                    largeFiles.add(CleanerFile(f, f.name, f.length()))
+                    for (target in targets) {
+                        if (target.exists()) {
+                            target.walkTopDown().maxDepth(4).forEach { f ->
+                                val nameLower = f.name.lowercase(Locale.ROOT)
+                                if (f.isDirectory) {
+                                    val children = f.listFiles()
+                                    if (children != null && children.isEmpty() && !f.name.startsWith(".")) {
+                                        emptyFolders.add(CleanerFile(f, f.name, 0L))
+                                    }
+                                } else if (f.isFile) {
+                                    if (nameLower.endsWith(".apk")) {
+                                        apkFiles.add(CleanerFile(f, f.name, f.length()))
+                                    } else if (nameLower.endsWith(".tmp") || nameLower.endsWith(".temp") ||
+                                        nameLower.endsWith(".log") || nameLower.endsWith(".bak") ||
+                                        nameLower.contains(".thumb")
+                                    ) {
+                                        cacheFiles.add(CleanerFile(f, f.name, f.length()))
+                                    } else if (nameLower.contains("(1)") || nameLower.contains("(2)") ||
+                                        nameLower.contains("_copy") || nameLower.contains("-copy")
+                                    ) {
+                                        duplicateFiles.add(CleanerFile(f, f.name, f.length()))
+                                    } else if (f.length() > 50L * 1024 * 1024) {
+                                        largeFiles.add(CleanerFile(f, f.name, f.length()))
+                                    }
                                 }
                             }
                         }
                     }
                 }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
 
             withContext(Dispatchers.Main) {

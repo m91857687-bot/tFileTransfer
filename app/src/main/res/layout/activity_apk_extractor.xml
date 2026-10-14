@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:background="@color/gray_2">
 
-    <com.google.android.material.appbar.MaterialToolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -149,27 +149,29 @@
                 android:textColor="@color/black_1"
                 tools:text="Selected: 2 apps" />
 
-            <com.google.android.material.button.MaterialButton
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_batch_extract"
                 android:layout_width="wrap_content"
-                android:layout_height="48dp"
+                android:layout_height="44dp"
+                android:background="@drawable/common_line_button_color_bg"
                 android:backgroundTint="@color/teal_200"
                 android:textColor="@color/white"
                 android:textStyle="bold"
-                app:icon="@drawable/ic_download"
-                app:iconTint="@color/white"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
                 android:text="Extract" />
 
-            <com.google.android.material.button.MaterialButton
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_batch_send"
                 android:layout_width="wrap_content"
-                android:layout_height="48dp"
+                android:layout_height="44dp"
                 android:layout_marginStart="8dp"
+                android:background="@drawable/common_line_button_color_bg"
                 android:backgroundTint="#FF6D00"
                 android:textColor="@color/white"
                 android:textStyle="bold"
-                app:icon="@drawable/send"
-                app:iconTint="@color/white"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
                 android:text="Send Barcode" />
 
         </LinearLayout>
