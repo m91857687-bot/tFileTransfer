@@ -138,4 +138,84 @@
     <string name="clone_phone_title">نقل الهاتف بالكامل (استنساخ)</string>
     <string name="instructions_title">تعليمات الاستخدام</string>
     <string name="instructions_desc">تم تصميم وبرمجه التطبيق ليعطيكم تجربه اسرع واخف واسهل لنقل الملفات.\n\nطريقة الاستخدام:\n1. اتصل عبر واي فاي مباشر أو عبر نقطة الاتصال.\n2. في وضع نقطة الاتصال، قم بمسح الباركود للاتصال تلقائياً.\n3. تصفح ملفاتك وانقلها بأقصى سرعة.\n\nمع تحيات المطور محمد هشام الصلاحي</string>
+
+    <!--region File Manager & Sharing-->
+    <string name="file_manager_title">مدير الملفات</string>
+    <string name="file_manager_subtitle">تصفح وأدر وأرسل التطبيقات، الصور، الفيديوهات والملفات</string>
+    <string name="shared_files_barcode_ready">تم تحديد الملفات! جاري فتح باركود الإرسال...</string>
+    <string name="tab_apps">تطبيقات وألعاب</string>
+    <string name="tab_images">الصور</string>
+    <string name="tab_videos">الفيديوهات</string>
+    <string name="tab_audios">الموسيقى</string>
+    <string name="tab_documents">المستندات</string>
+    <string name="tab_storage">ذاكرة الهاتف</string>
+    <string name="storage_stats">المستخدم: %1$s / الإجمالي: %2$s</string>
+    <string name="storage_internal">الذاكرة الداخلية</string>
+    <string name="storage_free">المتبقي: %s</string>
+    <string name="send_selected">إرسال (%d)</string>
+    <string name="delete_selected">حذف</string>
+    <string name="select_all">تحديد الكل</string>
+    <string name="deselect_all">إلغاء</string>
+    <string name="search_hint">بحث عن الملفات والتطبيقات...</string>
+    <string name="no_files_found">لم يتم العثور على عناصر</string>
+    <string name="delete_confirm_title">حذف العناصر</string>
+    <string name="delete_confirm_msg">هل أنت متأكد من حذف %d من العناصر المحددة؟</string>
+    <string name="file_details_title">تفاصيل الملف</string>
+    <string name="file_details_path">المسار: %s</string>
+    <string name="file_details_size">الحجم: %s</string>
+    <string name="file_details_modified">تاريخ التعديل: %s</string>
+    <string name="action_open">فتح</string>
+    <string name="action_send">إرسال</string>
+    <string name="action_delete">حذف</string>
+    <string name="action_details">التفاصيل</string>
+    <string name="action_rename">إعادة تسمية</string>
+    <string name="action_share">مشاركة</string>
+    <string name="rename_dialog_title">إعادة تسمية العنصر</string>
+    <string name="rename_dialog_hint">أدخل اسماً جديداً</string>
+    <string name="create_folder">مجلد جديد</string>
+    <string name="create_folder_hint">اسم المجلد</string>
+    <!--endregion-->
+
+    <!--region 4 Professional Additions (1, 2, 3, 4) in Arabic-->
+    <!-- 1. Junk & Storage Cleaner -->
+    <string name="cleaner_title">منظف الهاتف</string>
+    <string name="cleaner_subtitle">تنظيف الملفات المؤقتة والمهملة وتوفير مساحة التخزين</string>
+    <string name="cleaner_scanning">جاري فحص ذاكرة الجهاز والملفات المؤقتة…</string>
+    <string name="cleaner_clean_now">تنظيف الآن (%s)</string>
+    <string name="cleaner_cleaned_success">تم بنجاح تنظيف %s من الملفات غير الضرورية!</string>
+    <string name="cleaner_no_junk">هاتفك نظيف ومُحسّن بالكامل!</string>
+    <string name="cleaner_cat_cache">ملفات الكاش والمؤقتة</string>
+    <string name="cleaner_cat_apk">حزم تثبيت APK متبقية</string>
+    <string name="cleaner_cat_empty_dirs">مجلدات فارغة</string>
+    <string name="cleaner_cat_large_files">ملفات كبيرة الحجم (>50 م.ب)</string>
+    <string name="cleaner_cat_duplicate">سجلات وتنزيلات متكررة</string>
+    <string name="cleaner_items_count">%d عنصر (%s)</string>
+    <string name="cleaner_item_delete_warning">هل تريد بالتأكيد حذف ملفات المخلفات المحددة؟</string>
+
+    <!-- 2. APK Extractor & App Backup -->
+    <string name="apk_extractor_title">مستخرج التطبيقات APK</string>
+    <string name="apk_extractor_subtitle">استخراج وحفظ ومشاركة التطبيقات والألعاب المثبتة</string>
+    <string name="apk_extract_btn">استخراج APK</string>
+    <string name="apk_extracted_success">تم حفظ ملف APK في: %s</string>
+    <string name="apk_extract_failed">فشل استخراج ملف APK</string>
+    <string name="apk_extract_all">استخراج المحدد (%d)</string>
+    <string name="apk_send_barcode">إرسال بالباركود</string>
+    <string name="apk_version">الإصدار: %s</string>
+    <string name="apk_package">الحزمة: %s</string>
+    <string name="apk_search_hint">بحث في التطبيقات والألعاب…</string>
+
+    <!-- 3. Transfer Speedometer & Performance Booster -->
+    <string name="speed_peak">السرعة القصوى: %s</string>
+    <string name="speed_eta">الوقت المتبقي: %s</string>
+    <string name="speed_high_indicator">⚡ سرعة فائقة</string>
+    <string name="transfer_completed_title">اكتمل النقل بنجاح!</string>
+    <string name="transfer_summary_format">تم نقل %1$d ملف (%2$s) في %3$s بمتوسط سرعة %4$s</string>
+
+    <!-- 4. Instant Text & Clipboard Sharing -->
+    <string name="clipboard_paste_send">لصق وإرسال</string>
+    <string name="clipboard_copied">تم النسخ إلى الحافظة بنجاح!</string>
+    <string name="clipboard_open_link">فتح الرابط</string>
+    <string name="clipboard_quick_title">مشاركة النصوص والحافظة</string>
+    <string name="clipboard_quick_desc">شارك الروابط والنصوص والأكواد والملاحظات فورياً بين الجهازين</string>
+    <!--endregion-->
 </resources>

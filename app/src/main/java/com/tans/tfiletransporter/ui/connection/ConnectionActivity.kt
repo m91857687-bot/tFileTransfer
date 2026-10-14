@@ -15,6 +15,7 @@ import androidx.activity.addCallback
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import com.tans.tfiletransporter.R
 import com.tans.tfiletransporter.databinding.ConnectionActivityBinding
 import com.tans.tfiletransporter.logs.AndroidLog
@@ -166,6 +167,21 @@ class ConnectionActivity : BaseCoroutineStateActivity<ConnectionActivity.Compani
             true
         }
 
+        viewBinding.toolBar.menu.findItem(R.id.file_manager)?.setOnMenuItemClickListener {
+            openFileManager(0)
+            true
+        }
+
+        viewBinding.toolBar.menu.findItem(R.id.cleaner)?.setOnMenuItemClickListener {
+            startActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.cleaner.CleanerActivity::class.java))
+            true
+        }
+
+        viewBinding.toolBar.menu.findItem(R.id.apk_extractor)?.setOnMenuItemClickListener {
+            startActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.apkextractor.ApkExtractorActivity::class.java))
+            true
+        }
+
         viewBinding.toolBar.menu.findItem(R.id.clone_phone)?.isVisible = false
 
         viewBinding.toolBar.menu.findItem(R.id.instructions)?.setOnMenuItemClickListener {
@@ -205,11 +221,25 @@ class ConnectionActivity : BaseCoroutineStateActivity<ConnectionActivity.Compani
             updateState { it.copy(requestShareFiles = emptyList()) }
         }
 
-        viewBinding.myFilesBtn.setOnClickListener {
-            val i = Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.filetransport.FileTransportActivity::class.java)
-            i.putExtra("viewer_mode_extra_key", true)
-            startActivity(i)
+        viewBinding.cardFileManager.setOnClickListener { openFileManager(0) }
+        viewBinding.cardCleaner.setOnClickListener {
+            startActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.cleaner.CleanerActivity::class.java))
         }
+        viewBinding.cardApkExtractor.setOnClickListener {
+            startActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.apkextractor.ApkExtractorActivity::class.java))
+        }
+        viewBinding.btnCategoryApps.setOnClickListener { openFileManager(0) }
+        viewBinding.btnCategoryImages.setOnClickListener { openFileManager(1) }
+        viewBinding.btnCategoryVideos.setOnClickListener { openFileManager(2) }
+        viewBinding.btnCategoryAudios.setOnClickListener { openFileManager(3) }
+        viewBinding.btnCategoryStorage.setOnClickListener { openFileManager(5) }
+    }
+
+    private fun openFileManager(initialTab: Int = 0) {
+        val intent = Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.filemanager.FileManagerActivity::class.java).apply {
+            putExtra(com.tans.tfiletransporter.ui.filemanager.FileManagerActivity.EXTRA_INITIAL_TAB, initialTab)
+        }
+        startActivity(intent)
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -251,19 +281,58 @@ class ConnectionActivity : BaseCoroutineStateActivity<ConnectionActivity.Compani
         }
     }
 
-    private fun handleSharedUris(uris: List<Uri>) {
-        val files = uris.mapNotNull {
-            val f = uri2FileReal(this@ConnectionActivity, it)
-            if (f?.isFile == true && f.canRead() && f.length() > 0L) {
-                f
-            } else {
-                null
-            }
+    private fun resolveUriToFile(uri: Uri): File? {
+        val f = uri2FileReal(this@ConnectionActivity, uri)
+        if (f?.isFile == true && f.canRead() && f.length() > 0L) {
+            return f
         }
-        AndroidLog.d(TAG, "Handle shared files: $files")
-        if (files.isNotEmpty()) {
-            updateState {
-                it.copy(requestShareFiles = files)
+        return try {
+            val cursor = contentResolver.query(uri, null, null, null, null)
+            val nameIndex = cursor?.getColumnIndex(android.provider.OpenableColumns.DISPLAY_NAME) ?: -1
+            cursor?.moveToFirst()
+            val displayName = if (nameIndex >= 0) cursor?.getString(nameIndex) else null
+            cursor?.close()
+            val fileName = displayName ?: ("shared_${System.currentTimeMillis()}.dat")
+            val cacheDir = File(cacheDir, "shared_export")
+            if (!cacheDir.exists()) cacheDir.mkdirs()
+            val destFile = File(cacheDir, fileName)
+            contentResolver.openInputStream(uri)?.use { input ->
+                destFile.outputStream().use { output ->
+                    input.copyTo(output)
+                }
+            }
+            if (destFile.exists() && destFile.length() > 0L) destFile else null
+        } catch (e: Exception) {
+            AndroidLog.e(TAG, "Error resolving shared URI: ${e.message}", e)
+            null
+        }
+    }
+
+    private fun handleSharedUris(uris: List<Uri>) {
+        lifecycleScope.launch(kotlinx.coroutines.Dispatchers.IO) {
+            val files = uris.mapNotNull {
+                resolveUriToFile(it)
+            }
+            AndroidLog.d(TAG, "Handle shared files: $files")
+            if (files.isNotEmpty()) {
+                val filePaths = ArrayList(files.map { it.canonicalPath })
+                kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
+                    updateState {
+                        it.copy(requestShareFiles = files)
+                    }
+                    android.widget.Toast.makeText(
+                        this@ConnectionActivity,
+                        getString(R.string.shared_files_barcode_ready),
+                        android.widget.Toast.LENGTH_LONG
+                    ).show()
+
+                    // Automatically open sending QR Code (Hotspot) screen with the files attached!
+                    val hotspotIntent = Intent(this@ConnectionActivity, HotspotActivity::class.java).apply {
+                        putStringArrayListExtra(HotspotActivity.EXTRA_REQUEST_SHARE_FILES, filePaths)
+                        putExtra(HotspotActivity.EXTRA_AUTO_START, true)
+                    }
+                    startActivity(hotspotIntent)
+                }
             }
         }
     }

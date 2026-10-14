@@ -59,9 +59,21 @@ class HotspotActivity : AppCompatActivity() {
         }
     }
 
+    private var requestShareFiles: ArrayList<String> = arrayListOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hotspot)
+        requestShareFiles = intent.getStringArrayListExtra(EXTRA_REQUEST_SHARE_FILES) ?: arrayListOf()
+        val layoutSharedFilesInfo: View? = findViewById(R.id.layout_shared_files_info)
+        val tvSharedFilesCount: TextView? = findViewById(R.id.tv_shared_files_count)
+        if (requestShareFiles.isNotEmpty()) {
+            layoutSharedFilesInfo?.visibility = View.VISIBLE
+            tvSharedFilesCount?.text = getString(R.string.request_share_files, requestShareFiles.size)
+        } else {
+            layoutSharedFilesInfo?.visibility = View.GONE
+        }
+
         val tvStatus: TextView = findViewById(R.id.tv_status)
         val tvSsid: TextView = findViewById(R.id.tv_ssid)
         val tvPassword: TextView = findViewById(R.id.tv_password)
@@ -159,6 +171,12 @@ class HotspotActivity : AppCompatActivity() {
         }
         
         findViewById<View>(R.id.toolbar).setOnClickListener { finish() }
+
+        if (intent.getBooleanExtra(EXTRA_AUTO_START, false) && HotspotManager.reservation == null) {
+            btnToggle.postDelayed({
+                btnToggle.performClick()
+            }, 300)
+        }
     }
 
     private fun startAppServerForHotspot() {
@@ -176,7 +194,7 @@ class HotspotActivity : AppCompatActivity() {
                             remoteAddress = remoteDevice.remoteAddress.address,
                             remoteDeviceInfo = remoteDevice.deviceName,
                             isServer = true,
-                            requestShareFiles = emptyList()
+                            requestShareFiles = requestShareFiles
                         )
                     )
                 }
@@ -258,7 +276,7 @@ class HotspotActivity : AppCompatActivity() {
                                             remoteAddress = gatewayAddress,
                                             remoteDeviceInfo = "Hotspot Server",
                                             isServer = false,
-                                            requestShareFiles = emptyList()
+                                            requestShareFiles = requestShareFiles
                                         )
                                     )
                                 }
@@ -276,5 +294,10 @@ class HotspotActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         stopAppServerForHotspot()
+    }
+
+    companion object {
+        const val EXTRA_REQUEST_SHARE_FILES = "extra_request_share_files"
+        const val EXTRA_AUTO_START = "extra_auto_start"
     }
 }

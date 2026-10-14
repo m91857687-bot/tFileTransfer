@@ -49,6 +49,23 @@ class MessageFragment : BaseCoroutineStateFragment<Unit>(
         val viewBinding = MessageFragmentBinding.bind(contentView)
         val context = requireActivity() as FileTransportActivity
 
+        val clipboardManager = requireActivity().getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+
+        fun handleMessageClick(msgText: String) {
+            val clip = android.content.ClipData.newPlainText("ShareLoad Text", msgText)
+            clipboardManager.setPrimaryClip(clip)
+            android.widget.Toast.makeText(context, getString(R.string.clipboard_copied), android.widget.Toast.LENGTH_SHORT).show()
+
+            val trimmed = msgText.trim()
+            if (trimmed.startsWith("http://") || trimmed.startsWith("https://") || trimmed.startsWith("www.")) {
+                val url = if (trimmed.startsWith("www.")) "https://$trimmed" else trimmed
+                try {
+                    val browserIntent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(url))
+                    context.startActivity(browserIntent)
+                } catch (_: Exception) {}
+            }
+        }
+
         viewBinding.messageRv.adapter = SimpleAdapterBuilderImpl<FileTransportActivity.Companion.Message>(
             itemViewCreator = SingleItemViewCreatorImpl(R.layout.message_item_layout),
             dataSource = messageDataSource,
@@ -59,10 +76,16 @@ class MessageFragment : BaseCoroutineStateFragment<Unit>(
                     itemViewBinding.remoteMessageTv.visibility = View.VISIBLE
                     itemViewBinding.myMessageTv.visibility = View.GONE
                     itemViewBinding.remoteMessageTv.text = data.msg
+                    itemViewBinding.remoteMessageTv.setOnClickListener {
+                        handleMessageClick(data.msg)
+                    }
                 } else {
                     itemViewBinding.remoteMessageTv.visibility = View.GONE
                     itemViewBinding.myMessageTv.visibility = View.VISIBLE
                     itemViewBinding.myMessageTv.text = data.msg
+                    itemViewBinding.myMessageTv.setOnClickListener {
+                        handleMessageClick(data.msg)
+                    }
                 }
             }
         ).build()
@@ -79,6 +102,19 @@ class MessageFragment : BaseCoroutineStateFragment<Unit>(
                         }
                     }
                 }
+        }
+
+        viewBinding.pasteClipboardLayout.clicks(this) {
+            val clip = clipboardManager.primaryClip
+            if (clip != null && clip.itemCount > 0) {
+                val text = clip.getItemAt(0).coerceToText(context).toString()
+                if (text.isNotEmpty()) {
+                    viewBinding.editText.setText(text)
+                    viewBinding.editText.setSelection(text.length)
+                }
+            } else {
+                android.widget.Toast.makeText(context, "Clipboard is empty", android.widget.Toast.LENGTH_SHORT).show()
+            }
         }
 
         viewBinding.sendLayout.clicks(this) {

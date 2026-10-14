@@ -57,20 +57,30 @@ class FileSenderDialog : BaseSimpleCoroutineResultForceDialogFragment<FileTransf
             this@FileSenderDialog.sender.get()?.cancel()
             this@FileSenderDialog.sender.set(sender)
             val speedCalculator = SpeedCalculator()
+            var peakSpeedInBytes = 0L
             speedCalculator.addObserver(object : SpeedCalculator.Companion.SpeedObserver {
                 override fun onSpeedUpdated(speedInBytes: Long, speedInString: String) {
+                    if (speedInBytes > peakSpeedInBytes) {
+                        peakSpeedInBytes = speedInBytes
+                    }
+                    val isSuper = speedInBytes >= 5 * 1024 * 1024
                     updateState {
                         val file = it.transferFile.getOrNull()
                         val process = it.process
-                        var timeStr = ""
+                        var etaStr = ""
                         if (file != null && speedInBytes > 0) {
                             val remainBytes = file.size - process
-                            val remainSeconds = remainBytes / speedInBytes
+                            val remainSeconds = (remainBytes / speedInBytes).coerceAtLeast(0)
                             val m = remainSeconds / 60
                             val s = remainSeconds % 60
-                            timeStr = String.format(" | %02d:%02d", m, s)
+                            etaStr = String.format(java.util.Locale.ROOT, "%02d:%02d", m, s)
                         }
-                        it.copy(speedString = speedInString + timeStr)
+                        it.copy(
+                            speedString = speedInString,
+                            peakSpeedString = peakSpeedInBytes.toSizeString() + "/s",
+                            etaString = if (etaStr.isNotEmpty()) "ETA: $etaStr" else "",
+                            isSuperSpeed = isSuper
+                        )
                     }
                 }
             })
@@ -87,6 +97,15 @@ class FileSenderDialog : BaseSimpleCoroutineResultForceDialogFragment<FileTransf
                         }
                         FileTransferState.Finished -> {
                             speedCalculator.stop()
+                            try {
+                                val vibrator = activity?.getSystemService(android.content.Context.VIBRATOR_SERVICE) as? android.os.Vibrator
+                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                                    vibrator?.vibrate(android.os.VibrationEffect.createOneShot(100, android.os.VibrationEffect.DEFAULT_AMPLITUDE))
+                                } else {
+                                    @Suppress("DEPRECATION")
+                                    vibrator?.vibrate(100)
+                                }
+                            } catch (_: Exception) {}
                             onResult(FileTransferResult.Finished)
                         }
                         is FileTransferState.Error -> {
@@ -152,9 +171,9 @@ class FileSenderDialog : BaseSimpleCoroutineResultForceDialogFragment<FileTransf
             val file = it.first.getOrNull()
             val process = it.second
             if (file != null) {
-                val processInPercent = process * 100L / file.size
+                val processInPercent = if (file.size > 0) (process * 100L / file.size) else 0L
                 viewBinding.filePb.progress = processInPercent.toInt()
-                viewBinding.fileDealSizeTv.text = "${process.toSizeString()}/${file.size.toSizeString()}"
+                viewBinding.fileDealSizeTv.text = "${process.toSizeString()} / ${file.size.toSizeString()} ($processInPercent%)"
             } else {
                 viewBinding.filePb.progress = 0
                 viewBinding.fileDealSizeTv.text = ""
@@ -163,6 +182,18 @@ class FileSenderDialog : BaseSimpleCoroutineResultForceDialogFragment<FileTransf
 
         renderStateNewCoroutine({ it.speedString }) {
             viewBinding.speedTv.text = it
+        }
+
+        renderStateNewCoroutine({ it.peakSpeedString }) {
+            viewBinding.tvPeakSpeed.text = if (it.isNotEmpty()) "Peak: $it" else ""
+        }
+
+        renderStateNewCoroutine({ it.etaString }) {
+            viewBinding.tvEta.text = it
+        }
+
+        renderStateNewCoroutine({ it.isSuperSpeed }) {
+            viewBinding.tvSuperSpeedBadge.visibility = if (it) View.VISIBLE else View.GONE
         }
 
         viewBinding.cancelButton.clicks(this, 1000L) {
@@ -188,5 +219,8 @@ data class FileTransferDialogState(
     val transferFile: Optional<FileExploreFile> = Optional.empty(),
     val process: Long = 0L,
     val speedString: String = "",
-    val finishedFiles: List<FileExploreFile> = emptyList()
+    val finishedFiles: List<FileExploreFile> = emptyList(),
+    val peakSpeedString: String = "",
+    val etaString: String = "",
+    val isSuperSpeed: Boolean = false
 )

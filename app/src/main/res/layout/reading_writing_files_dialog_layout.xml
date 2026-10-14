@@ -50,7 +50,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="6dp"
+        android:gravity="center_vertical"
         android:layout_marginStart="?attr/dialogPreferredPadding"
         android:layout_marginEnd="?attr/dialogPreferredPadding">
 
@@ -60,7 +61,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/gray_1"
             android:textSize="12sp"
-            tools:text="100.0MB/2.3GB"/>
+            tools:text="100.0MB / 2.3GB (45%)"/>
 
         <View
             android:layout_width="0dp"
@@ -68,13 +69,63 @@
             android:layout_weight="1"/>
 
         <TextView
+            android:id="@+id/tv_super_speed_badge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="6dp"
+            android:background="#E0F2F1"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:text="@string/speed_high_indicator"
+            android:textColor="@color/teal_200"
+            android:textStyle="bold"
+            android:textSize="10sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <TextView
             android:id="@+id/speed_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray_1"
-            android:textSize="12sp"
+            android:textColor="@color/teal_200"
+            android:textStyle="bold"
+            android:textSize="13sp"
             android:layout_gravity="end"
-            tools:text="100 MB/s"/>
+            tools:text="18.5 MB/s"/>
+
+    </LinearLayout>
+
+    <!-- Speedometer Secondary Stats (Peak Speed & ETA) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="3dp"
+        android:layout_marginStart="?attr/dialogPreferredPadding"
+        android:layout_marginEnd="?attr/dialogPreferredPadding">
+
+        <TextView
+            android:id="@+id/tv_eta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray_2"
+            android:textSize="11sp"
+            tools:text="ETA: 00:15"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/tv_peak_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray_2"
+            android:textSize="11sp"
+            tools:text="Peak: 24.8 MB/s"/>
 
     </LinearLayout>
 

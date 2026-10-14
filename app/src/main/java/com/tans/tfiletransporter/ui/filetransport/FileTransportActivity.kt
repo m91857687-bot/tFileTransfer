@@ -268,7 +268,7 @@ class FileTransportActivity : BaseCoroutineStateActivity<FileTransportActivity.C
         val isViewerMode = intent.getBooleanExtra("viewer_mode_extra_key", false)
         if (isViewerMode) {
             viewBinding.floatingActionBt.visibility = android.view.View.GONE
-            viewBinding.toolBar.title = "My Files val viewBinding = FileTransportActivityBinding.bind(contentView) Apps"
+            viewBinding.toolBar.title = getString(R.string.file_manager_title)
         }
 
         // Loading dialog.
@@ -352,6 +352,11 @@ class FileTransportActivity : BaseCoroutineStateActivity<FileTransportActivity.C
             viewBinding.toolBar.menu.findItem(R.id.create_hotspot)?.isVisible = false
             viewBinding.toolBar.menu.findItem(R.id.history)?.isVisible = false
             viewBinding.toolBar.menu.findItem(R.id.web_share)?.isVisible = false
+
+            viewBinding.toolBar.menu.findItem(R.id.file_manager)?.setOnMenuItemClickListener {
+                startActivity(Intent(this@FileTransportActivity, com.tans.tfiletransporter.ui.filemanager.FileManagerActivity::class.java))
+                true
+            }
 
             viewBinding.toolBar.menu.findItem(R.id.instructions)?.setOnMenuItemClickListener {
                 com.tans.tfiletransporter.ui.instructions.InstructionsDialog().show(supportFragmentManager, "InstructionsDialog")

@@ -40,6 +40,24 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/message_rv">
 
+        <FrameLayout
+            android:id="@+id/paste_clipboard_layout"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_paste"
+                app:tint="@color/teal_200"
+                android:layout_gravity="center"
+                android:contentDescription="Paste from clipboard" />
+
+        </FrameLayout>
+
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/edit_text"
             android:layout_width="0dp"
@@ -47,12 +65,15 @@
             android:layout_height="40dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="10dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="8dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:paddingTop="4dp"
             android:paddingBottom="4dp"
+            android:hint="Type message or paste link…"
+            android:textColorHint="@color/gray_2"
+            android:textSize="14sp"
             android:background="@drawable/edit_text_bg" />
 
         <FrameLayout
@@ -64,10 +85,12 @@
             android:layout_marginEnd="8dp">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:src="@drawable/send"
-                android:layout_gravity="center"/>
+                app:tint="@color/teal_200"
+                android:layout_gravity="center"
+                android:contentDescription="Send message"/>
 
         </FrameLayout>
 
