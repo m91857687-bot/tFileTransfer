@@ -75,6 +75,7 @@ class CleanerActivity : AppCompatActivity() {
             val apkFiles = mutableListOf<CleanerFile>()
             val emptyFolders = mutableListOf<CleanerFile>()
             val largeFiles = mutableListOf<CleanerFile>()
+            val duplicateFiles = mutableListOf<CleanerFile>()
 
             // 1. App internal and external caches
             fun scanCacheDir(dir: File?) {
@@ -117,6 +118,10 @@ class CleanerActivity : AppCompatActivity() {
                                     nameLower.contains(".thumb")
                                 ) {
                                     cacheFiles.add(CleanerFile(f, f.name, f.length()))
+                                } else if (nameLower.contains("(1)") || nameLower.contains("(2)") ||
+                                    nameLower.contains("_copy") || nameLower.contains("-copy")
+                                ) {
+                                    duplicateFiles.add(CleanerFile(f, f.name, f.length()))
                                 } else if (f.length() > 50L * 1024 * 1024) {
                                     largeFiles.add(CleanerFile(f, f.name, f.length()))
                                 }
@@ -145,6 +150,16 @@ class CleanerActivity : AppCompatActivity() {
                             title = getString(R.string.cleaner_cat_apk),
                             iconRes = R.drawable.ic_apk,
                             files = apkFiles
+                        )
+                    )
+                }
+                if (duplicateFiles.isNotEmpty()) {
+                    categories.add(
+                        CleanerCategory(
+                            type = CleanerType.DUPLICATE_LOGS,
+                            title = getString(R.string.cleaner_cat_duplicate),
+                            iconRes = R.drawable.ic_copy,
+                            files = duplicateFiles
                         )
                     )
                 }

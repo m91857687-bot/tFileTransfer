@@ -182,6 +182,16 @@ class ConnectionActivity : BaseCoroutineStateActivity<ConnectionActivity.Compani
             true
         }
 
+        viewBinding.toolBar.menu.findItem(R.id.network_speed)?.setOnMenuItemClickListener {
+            startActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.networkspeed.NetworkSpeedActivity::class.java))
+            true
+        }
+
+        viewBinding.toolBar.menu.findItem(R.id.vault)?.setOnMenuItemClickListener {
+            startActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.vault.VaultActivity::class.java))
+            true
+        }
+
         viewBinding.toolBar.menu.findItem(R.id.clone_phone)?.isVisible = false
 
         viewBinding.toolBar.menu.findItem(R.id.instructions)?.setOnMenuItemClickListener {
@@ -227,6 +237,12 @@ class ConnectionActivity : BaseCoroutineStateActivity<ConnectionActivity.Compani
         }
         viewBinding.cardApkExtractor.setOnClickListener {
             startActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.apkextractor.ApkExtractorActivity::class.java))
+        }
+        viewBinding.cardNetworkSpeed.setOnClickListener {
+            startActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.networkspeed.NetworkSpeedActivity::class.java))
+        }
+        viewBinding.cardVault.setOnClickListener {
+            startActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.vault.VaultActivity::class.java))
         }
         viewBinding.btnCategoryApps.setOnClickListener { openFileManager(0) }
         viewBinding.btnCategoryImages.setOnClickListener { openFileManager(1) }

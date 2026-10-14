@@ -24,6 +24,14 @@
           android:title="@string/apk_extractor_title"
           android:icon="@drawable/ic_apk"
           app:showAsAction="ifRoom"/>
+    <item android:id="@+id/network_speed"
+          android:title="@string/network_speed_title"
+          android:icon="@drawable/ic_wifi_speed"
+          app:showAsAction="ifRoom"/>
+    <item android:id="@+id/vault"
+          android:title="@string/vault_title"
+          android:icon="@drawable/ic_vault"
+          app:showAsAction="ifRoom"/>
     <item android:id="@+id/clone_phone"
           android:title="@string/clone_phone_title"
           app:showAsAction="never"/>

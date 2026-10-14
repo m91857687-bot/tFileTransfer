@@ -188,7 +188,7 @@
     <string name="cleaner_cat_empty_dirs">Empty Folders</string>
     <string name="cleaner_cat_large_files">Large Files (>50 MB)</string>
     <string name="cleaner_cat_duplicate">Duplicate Logs &amp; Downloads</string>
-    <string name="cleaner_items_count">%d items (%s)</string>
+    <string name="cleaner_items_count">%1$d items (%2$s)</string>
     <string name="cleaner_item_delete_warning">Are you sure you want to clean the selected junk files?</string>
 
     <!-- 2. APK Extractor & App Backup -->
@@ -214,7 +214,43 @@
     <string name="clipboard_paste_send">Paste &amp; Send</string>
     <string name="clipboard_copied">Copied to clipboard!</string>
     <string name="clipboard_open_link">Open Link</string>
-    <string name="clipboard_quick_title">Instant Text &amp; Clipboard</string>
-    <string name="clipboard_quick_desc">Share links, texts, codes and notes instantly between devices</string>
+    <!-- 5. Wi-Fi & Network Speed Analyzer -->
+    <string name="network_speed_title">Network &amp; Wi-Fi Speed</string>
+    <string name="network_speed_subtitle">Signal meter, link speed &amp; transfer latency</string>
+    <string name="network_speed_test_btn">Start Speed Test</string>
+    <string name="network_speed_testing">Testing network throughput…</string>
+    <string name="network_speed_ping">Ping Latency: %d ms</string>
+    <string name="network_speed_link">Link Speed: %d Mbps</string>
+    <string name="network_speed_signal">Signal Strength: %1$d dBm (%2$s)</string>
+    <string name="network_speed_band">Frequency: %s</string>
+    <string name="network_speed_ssid">Connected Wi-Fi: %s</string>
+    <string name="network_speed_tip_5ghz">🚀 Tip: 5GHz Wi-Fi / Hotspot offers up to 5x faster transfer speeds than 2.4GHz!</string>
+    <string name="network_speed_excellent">Excellent (Super Fast)</string>
+    <string name="network_speed_good">Good</string>
+    <string name="network_speed_fair">Fair</string>
+    <string name="network_speed_weak">Weak (Slow Transfer)</string>
+    <string name="network_speed_download">Speed: %s</string>
+    <string name="network_speed_local_ip">Local IP: %s</string>
+
+    <!-- 7. Secure Vault / Private Safe -->
+    <string name="vault_title">Secure Vault</string>
+    <string name="vault_subtitle">Lock &amp; hide private photos, videos &amp; files</string>
+    <string name="vault_enter_pin">Enter 4-Digit PIN</string>
+    <string name="vault_setup_pin">Set New 4-Digit PIN</string>
+    <string name="vault_confirm_pin">Confirm 4-Digit PIN</string>
+    <string name="vault_pin_mismatch">PINs do not match, please try again</string>
+    <string name="vault_pin_wrong">Incorrect PIN, please try again</string>
+    <string name="vault_pin_set_success">Vault PIN set successfully!</string>
+    <string name="vault_empty">No locked files in vault.\nTap + to hide private files safely!</string>
+    <string name="vault_add_files">Add to Vault</string>
+    <string name="vault_restore">Restore to Storage</string>
+    <string name="vault_restored_success">File restored back to original storage</string>
+    <string name="vault_locked_success">Moved %d item(s) into Secure Vault</string>
+    <string name="vault_delete_confirm">Delete this file permanently from Vault?</string>
+    <string name="vault_tab_all">All Files</string>
+    <string name="vault_tab_photos">Photos</string>
+    <string name="vault_tab_videos">Videos</string>
+    <string name="vault_tab_docs">Documents</string>
+    <string name="vault_change_pin">Change PIN</string>
     <!--endregion-->
 </resources>

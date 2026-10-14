@@ -21,5 +21,6 @@
     
     <color name="line_color">#FF222222</color>
     
+    <color name="color_background">#FF000000</color>
     <color name="md_dialog_title_color">#FFFFFFFF</color>
 </resources>

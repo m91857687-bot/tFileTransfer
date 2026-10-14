@@ -110,6 +110,14 @@
             android:name=".ui.apkextractor.ApkExtractorActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation|screenSize|uiMode" />
+        <activity
+            android:name=".ui.networkspeed.NetworkSpeedActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize|uiMode" />
+        <activity
+            android:name=".ui.vault.VaultActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize|uiMode" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

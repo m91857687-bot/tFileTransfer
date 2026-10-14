@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/color_background">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        android:elevation="3dp"
+        app:navigationIcon="@drawable/ic_back_arrow"
+        app:navigationIconTint="@color/black_1"
+        app:title="@string/vault_title"
+        app:titleTextColor="@color/black_1" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- 1. PIN Keypad Layout (Visible when locked) -->
+        <LinearLayout
+            android:id="@+id/layout_pin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="24dp"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:src="@drawable/ic_vault"
+                app:tint="@color/teal_200"
+                android:contentDescription="Vault Shield" />
+
+            <TextView
+                android:id="@+id/tv_pin_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/vault_enter_pin"
+                android:textColor="@color/black_1"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_pin_subprompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Protect your private photos and sensitive files"
+                android:textColor="@color/gray_2"
+                android:textSize="12sp" />
+
+            <!-- 4 Dot PIN Indicators -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/dot_1"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/common_line_button_color_bg" />
+
+                <View
+                    android:id="@+id/dot_2"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/common_line_button_color_bg" />
+
+                <View
+                    android:id="@+id/dot_3"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/common_line_button_color_bg" />
+
+                <View
+                    android:id="@+id/dot_4"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/common_line_button_color_bg" />
+
+            </LinearLayout>
+
+            <!-- Keypad Grid -->
+            <TableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:stretchColumns="*">
+
+                <TableRow android:gravity="center">
+                    <Button android:id="@+id/btn_key_1" style="@style/Widget.MaterialComponents.Button.TextButton" android:layout_width="72dp" android:layout_height="64dp" android:text="1" android:textSize="22sp" android:textColor="@color/black_1"/>
+                    <Button android:id="@+id/btn_key_2" style="@style/Widget.MaterialComponents.Button.TextButton" android:layout_width="72dp" android:layout_height="64dp" android:text="2" android:textSize="22sp" android:textColor="@color/black_1"/>
+                    <Button android:id="@+id/btn_key_3" style="@style/Widget.MaterialComponents.Button.TextButton" android:layout_width="72dp" android:layout_height="64dp" android:text="3" android:textSize="22sp" android:textColor="@color/black_1"/>
+                </TableRow>
+
+                <TableRow android:gravity="center">
+                    <Button android:id="@+id/btn_key_4" style="@style/Widget.MaterialComponents.Button.TextButton" android:layout_width="72dp" android:layout_height="64dp" android:text="4" android:textSize="22sp" android:textColor="@color/black_1"/>
+                    <Button android:id="@+id/btn_key_5" style="@style/Widget.MaterialComponents.Button.TextButton" android:layout_width="72dp" android:layout_height="64dp" android:text="5" android:textSize="22sp" android:textColor="@color/black_1"/>
+                    <Button android:id="@+id/btn_key_6" style="@style/Widget.MaterialComponents.Button.TextButton" android:layout_width="72dp" android:layout_height="64dp" android:text="6" android:textSize="22sp" android:textColor="@color/black_1"/>
+                </TableRow>
+
+                <TableRow android:gravity="center">
+                    <Button android:id="@+id/btn_key_7" style="@style/Widget.MaterialComponents.Button.TextButton" android:layout_width="72dp" android:layout_height="64dp" android:text="7" android:textSize="22sp" android:textColor="@color/black_1"/>
+                    <Button android:id="@+id/btn_key_8" style="@style/Widget.MaterialComponents.Button.TextButton" android:layout_width="72dp" android:layout_height="64dp" android:text="8" android:textSize="22sp" android:textColor="@color/black_1"/>
+                    <Button android:id="@+id/btn_key_9" style="@style/Widget.MaterialComponents.Button.TextButton" android:layout_width="72dp" android:layout_height="64dp" android:text="9" android:textSize="22sp" android:textColor="@color/black_1"/>
+                </TableRow>
+
+                <TableRow android:gravity="center">
+                    <Button android:id="@+id/btn_key_clear" style="@style/Widget.MaterialComponents.Button.TextButton" android:layout_width="72dp" android:layout_height="64dp" android:text="C" android:textSize="18sp" android:textColor="#E53935"/>
+                    <Button android:id="@+id/btn_key_0" style="@style/Widget.MaterialComponents.Button.TextButton" android:layout_width="72dp" android:layout_height="64dp" android:text="0" android:textSize="22sp" android:textColor="@color/black_1"/>
+                    <ImageButton android:id="@+id/btn_key_backspace" android:layout_width="72dp" android:layout_height="64dp" android:background="?attr/selectableItemBackgroundBorderless" android:src="@drawable/ic_keypad_delete" app:tint="@color/black_1" android:contentDescription="Backspace"/>
+                </TableRow>
+
+            </TableLayout>
+
+        </LinearLayout>
+
+        <!-- 2. Vault Content Layout (Visible when unlocked) -->
+        <LinearLayout
+            android:id="@+id/layout_vault_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <!-- Category Filter Chips -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tab_all"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:background="@drawable/common_card_bg"
+                        android:text="@string/vault_tab_all"
+                        android:textColor="@color/teal_200"
+                        android:textStyle="bold"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tab_photos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:background="@drawable/common_card_bg"
+                        android:text="@string/vault_tab_photos"
+                        android:textColor="@color/black_1"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tab_videos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:background="@drawable/common_card_bg"
+                        android:text="@string/vault_tab_videos"
+                        android:textColor="@color/black_1"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tab_docs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:background="@drawable/common_card_bg"
+                        android:text="@string/vault_tab_docs"
+                        android:textColor="@color/black_1"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_vault_files"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="80dp" />
+
+                <!-- Empty State -->
+                <LinearLayout
+                    android:id="@+id/layout_vault_empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="32dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:src="@drawable/ic_vault"
+                        app:tint="@color/gray_1"
+                        android:contentDescription="Empty Vault" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/vault_empty"
+                        android:textColor="@color/gray_2"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:lineSpacingExtra="4dp" />
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <!-- Bottom Add Button -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:background="@color/white"
+                android:elevation="6dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_add_to_vault"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:text="@string/vault_add_files"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    app:icon="@drawable/ic_create_folder"
+                    app:iconTint="@color/white"
+                    app:cornerRadius="14dp"
+                    app:backgroundTint="@color/teal_200" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</LinearLayout>

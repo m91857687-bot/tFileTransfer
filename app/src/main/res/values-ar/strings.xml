@@ -189,7 +189,7 @@
     <string name="cleaner_cat_empty_dirs">مجلدات فارغة</string>
     <string name="cleaner_cat_large_files">ملفات كبيرة الحجم (>50 م.ب)</string>
     <string name="cleaner_cat_duplicate">سجلات وتنزيلات متكررة</string>
-    <string name="cleaner_items_count">%d عنصر (%s)</string>
+    <string name="cleaner_items_count">%1$d عنصر (%2$s)</string>
     <string name="cleaner_item_delete_warning">هل تريد بالتأكيد حذف ملفات المخلفات المحددة؟</string>
 
     <!-- 2. APK Extractor & App Backup -->
@@ -214,8 +214,43 @@
     <!-- 4. Instant Text & Clipboard Sharing -->
     <string name="clipboard_paste_send">لصق وإرسال</string>
     <string name="clipboard_copied">تم النسخ إلى الحافظة بنجاح!</string>
-    <string name="clipboard_open_link">فتح الرابط</string>
-    <string name="clipboard_quick_title">مشاركة النصوص والحافظة</string>
-    <string name="clipboard_quick_desc">شارك الروابط والنصوص والأكواد والملاحظات فورياً بين الجهازين</string>
+    <!-- 5. Wi-Fi & Network Speed Analyzer -->
+    <string name="network_speed_title">سرعة الشبكة والواي فاي</string>
+    <string name="network_speed_subtitle">مقياس قوة الإشارة وسرعة الرابط وتشخيص زمن الوصول</string>
+    <string name="network_speed_test_btn">بدء فحص السرعة</string>
+    <string name="network_speed_testing">جاري فحص سرعة واستجابة الشبكة…</string>
+    <string name="network_speed_ping">زمن الاستجابة (Ping): %d ملّي ثانية</string>
+    <string name="network_speed_link">سرعة الرابط: %d ميغابت/ث</string>
+    <string name="network_speed_signal">قوة الإشارة: %1$d ديسيبل (%2$s)</string>
+    <string name="network_speed_band">التردد: %s</string>
+    <string name="network_speed_ssid">شبكة الواي فاي المتصلة: %s</string>
+    <string name="network_speed_tip_5ghz">🚀 نصيحة: شبكة أو نقطة اتصال 5 جيجاهرتز توفر سرعة نقل أعلى بما يصل إلى 5 أضعاف مقارنة بـ 2.4 جيجاهرتز!</string>
+    <string name="network_speed_excellent">ممتاز (سرعة نقل فائقة)</string>
+    <string name="network_speed_good">جيد جداً</string>
+    <string name="network_speed_fair">متوسط</string>
+    <string name="network_speed_weak">ضعيف (قد يؤثر على سرعة النقل)</string>
+    <string name="network_speed_download">السرعة: %s</string>
+    <string name="network_speed_local_ip">عنوان IP المحلي: %s</string>
+
+    <!-- 7. Secure Vault / Private Safe -->
+    <string name="vault_title">الخزنة السرية</string>
+    <string name="vault_subtitle">قفل وإخفاء الصور والفيديوهات والملفات برقم سري</string>
+    <string name="vault_enter_pin">أدخل رمز PIN المكون من 4 أرقام</string>
+    <string name="vault_setup_pin">تعيين رمز PIN جديد (4 أرقام)</string>
+    <string name="vault_confirm_pin">تأكيد رمز PIN الجديد</string>
+    <string name="vault_pin_mismatch">الرمزان غير متطابقين، يرجى المحاولة ثانية</string>
+    <string name="vault_pin_wrong">رمز PIN غير صحيح، حاول مرة أخرى</string>
+    <string name="vault_pin_set_success">تم تعيين رمز الخزنة بنجاح!</string>
+    <string name="vault_empty">لا توجد ملفات مقفلة في الخزنة حالياً.\nاضغط + لإخفاء وحماية ملفاتك الخاصة بأمان!</string>
+    <string name="vault_add_files">إضافة إلى الخزنة</string>
+    <string name="vault_restore">استعادة إلى الذاكرة</string>
+    <string name="vault_restored_success">تمت استعادة الملف إلى موقعه الأصلي بنجاح</string>
+    <string name="vault_locked_success">تم نقل %d عنصر إلى الخزنة السرية بنجاح</string>
+    <string name="vault_delete_confirm">هل تريد حذف هذا الملف نهائياً من الخزنة؟</string>
+    <string name="vault_tab_all">جميع الملفات</string>
+    <string name="vault_tab_photos">الصور</string>
+    <string name="vault_tab_videos">الفيديوهات</string>
+    <string name="vault_tab_docs">المستندات</string>
+    <string name="vault_change_pin">تغيير رمز PIN</string>
     <!--endregion-->
 </resources>
