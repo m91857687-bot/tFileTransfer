@@ -44,53 +44,58 @@ class ApkExtractorActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityApkExtractorBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        try {
+            binding = ActivityApkExtractorBinding.inflate(layoutInflater)
+            setContentView(binding.root)
 
-        binding.toolBar.setNavigationOnClickListener {
-            finish()
-        }
+            binding.toolBar.setNavigationOnClickListener {
+                finish()
+            }
 
-        appAdapter = AppAdapter(displayedApps)
-        binding.rvApps.apply {
-            layoutManager = LinearLayoutManager(this@ApkExtractorActivity)
-            adapter = appAdapter
-        }
+            appAdapter = AppAdapter(displayedApps)
+            binding.rvApps.apply {
+                layoutManager = LinearLayoutManager(this@ApkExtractorActivity)
+                adapter = appAdapter
+            }
 
-        binding.etSearchApps.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                searchQuery = s?.toString()?.trim() ?: ""
-                binding.ivClearSearch.visibility = if (searchQuery.isNotEmpty()) View.VISIBLE else View.GONE
+            binding.etSearchApps.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    searchQuery = s?.toString()?.trim() ?: ""
+                    binding.ivClearSearch.visibility = if (searchQuery.isNotEmpty()) View.VISIBLE else View.GONE
+                    filterApps()
+                }
+                override fun afterTextChanged(s: Editable?) {}
+            })
+
+            binding.ivClearSearch.setOnClickListener {
+                binding.etSearchApps.text?.clear()
+            }
+
+            binding.cbUserAppsOnly.setOnCheckedChangeListener { _, isChecked ->
+                userAppsOnly = isChecked
                 filterApps()
             }
-            override fun afterTextChanged(s: Editable?) {}
-        })
 
-        binding.ivClearSearch.setOnClickListener {
-            binding.etSearchApps.text?.clear()
-        }
-
-        binding.cbUserAppsOnly.setOnCheckedChangeListener { _, isChecked ->
-            userAppsOnly = isChecked
-            filterApps()
-        }
-
-        binding.btnBatchExtract.setOnClickListener {
-            val selected = displayedApps.filter { it.isSelected }
-            if (selected.isNotEmpty()) {
-                batchExtractApks(selected)
+            binding.btnBatchExtract.setOnClickListener {
+                val selected = displayedApps.filter { it.isSelected }
+                if (selected.isNotEmpty()) {
+                    batchExtractApks(selected)
+                }
             }
-        }
 
-        binding.btnBatchSend.setOnClickListener {
-            val selected = displayedApps.filter { it.isSelected }
-            if (selected.isNotEmpty()) {
-                batchSendApks(selected)
+            binding.btnBatchSend.setOnClickListener {
+                val selected = displayedApps.filter { it.isSelected }
+                if (selected.isNotEmpty()) {
+                    batchSendApks(selected)
+                }
             }
-        }
 
-        loadApps()
+            loadApps()
+        } catch (e: Throwable) {
+            com.tans.tfiletransporter.logs.AndroidLog.e("ApkExtractor", "onCreate error", e)
+            Toast.makeText(this, "Extractor error: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun loadApps() {

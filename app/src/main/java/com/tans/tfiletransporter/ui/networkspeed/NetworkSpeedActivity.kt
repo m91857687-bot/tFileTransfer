@@ -33,28 +33,33 @@ class NetworkSpeedActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityNetworkSpeedBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        try {
+            binding = ActivityNetworkSpeedBinding.inflate(layoutInflater)
+            setContentView(binding.root)
 
-        binding.toolBar.setNavigationOnClickListener {
-            finish()
-        }
-
-        binding.btnStartTest.setOnClickListener {
-            if (!isTesting) {
-                runSpeedAndPingTest()
+            binding.toolBar.setNavigationOnClickListener {
+                finish()
             }
-        }
 
-        binding.btnLaunchHotspot.setOnClickListener {
-            startActivity(Intent(this, HotspotActivity::class.java))
-        }
+            binding.btnStartTest.setOnClickListener {
+                if (!isTesting) {
+                    runSpeedAndPingTest()
+                }
+            }
 
-        binding.btnLaunchScanner.setOnClickListener {
-            startActivity(Intent(this, ScanQrCodeActivity::class.java))
-        }
+            binding.btnLaunchHotspot.setOnClickListener {
+                startActivity(Intent(this, HotspotActivity::class.java))
+            }
 
-        loadNetworkInfo()
+            binding.btnLaunchScanner.setOnClickListener {
+                startActivity(Intent(this, ScanQrCodeActivity::class.java))
+            }
+
+            loadNetworkInfo()
+        } catch (e: Throwable) {
+            com.tans.tfiletransporter.logs.AndroidLog.e("NetworkSpeed", "onCreate error", e)
+            android.widget.Toast.makeText(this, "Speed error: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onResume() {

@@ -78,17 +78,22 @@ class VaultActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityVaultBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        try {
+            binding = ActivityVaultBinding.inflate(layoutInflater)
+            setContentView(binding.root)
 
-        binding.toolBar.setNavigationOnClickListener {
-            finish()
+            binding.toolBar.setNavigationOnClickListener {
+                finish()
+            }
+
+            setupPinKeypad()
+            setupVaultUI()
+
+            checkPinState()
+        } catch (e: Throwable) {
+            com.tans.tfiletransporter.logs.AndroidLog.e("VaultActivity", "onCreate error", e)
+            Toast.makeText(this, "Vault error: ${e.message}", Toast.LENGTH_SHORT).show()
         }
-
-        setupPinKeypad()
-        setupVaultUI()
-
-        checkPinState()
     }
 
     private fun checkPinState() {

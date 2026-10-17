@@ -15,8 +15,7 @@
         android:background="@color/teal_200"
         app:title="@string/cleaner_title"
         app:titleTextColor="@color/white"
-        app:navigationIcon="@drawable/ic_back_arrow"
-        app:navigationIconTint="@color/white" />
+        app:navigationIcon="@drawable/ic_back_arrow" />
 
     <!-- Top Hero Header with Cleaner Stats -->
     <androidx.cardview.widget.CardView

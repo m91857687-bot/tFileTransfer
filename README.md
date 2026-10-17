@@ -39,13 +39,20 @@ A powerful Android file-sharing and local network communication application desi
    - Protect sensitive photos, videos, and private documents with a 4-digit security PIN.
    - Scrambled hidden storage in private app directory where gallery and external file explorers cannot view them.
    - Built-in file preview, category tabs (Photos, Videos, Documents), and one-tap restore back to public storage.
-9. **Lightning Fast File Transfer (P2P):** Share files via Wi-Fi Direct (P2P) directly between devices without needing an internet connection.
-10. **Local Network / Hotspot Connection:** Connect devices via a shared router or a mobile hotspot. The receiving device scans the QR code using the in-app scanner to connect automatically!
-11. **Phone Clone (One-Click Transfer):** Transfer your entire phone (Apps, Images, Videos, Audios) with a single click using the "Clone Phone" option in the top menu.
-12. **Web Share:** Share files with non-Android devices (like iOS, Windows, Mac) using a built-in web server.
-13. **Share Load Games:** Play professional 2-player games directly over the connection while you transfer files (Othello / Reversi, Connect 4, Tic-Tac-Toe).
-14. **Optimized Dark Mode:** Deep, pure black dark mode optimized for OLED screens to save battery.
-15. **In-App Instructions:** Read localized Arabic and English usage instructions right from the app settings menu.
+9. **Cannon Arsenal Battle Game (لعبة تخبئة الأسلحة والمدافع):**
+   - The classic tactical battle game where each player secretly hides their weapons and cannons (Heavy Cannon, Rocket Launcher, Twin Cannon, Sniper Cannon, Bomb Bunker) across their battlefield grid.
+   - Take turns directing your cannon fire at the enemy radar grid with direct-hit explosion animations and splash feedback!
+   - Playable in 3 modes:
+     1. **Share Load WiFi/Hotspot Multiplayer:** Real-time peer-to-peer battle over the local transfer network!
+     2. **Solo vs Smart AI:** Battle against an intelligent tactical cannon bot.
+     3. **2-Player Pass & Play:** Two players take turns secretly hiding and firing on the same device!
+10. **Lightning Fast File Transfer (P2P):** Share files via Wi-Fi Direct (P2P) directly between devices without needing an internet connection.
+11. **Local Network / Hotspot Connection:** Connect devices via a shared router or a mobile hotspot. The receiving device scans the QR code using the in-app scanner to connect automatically!
+12. **Phone Clone (One-Click Transfer):** Transfer your entire phone (Apps, Images, Videos, Audios) with a single click using the "Clone Phone" option in the top menu.
+13. **Web Share:** Share files with non-Android devices (like iOS, Windows, Mac) using a built-in web server.
+14. **Share Load Games:** Play professional 2-player games directly over the connection while you transfer files (Cannon Arsenal Warfare, Othello / Reversi, Connect 4, Tic-Tac-Toe).
+15. **Optimized Dark Mode:** Deep, pure black dark mode optimized for OLED screens to save battery.
+16. **In-App Instructions:** Read localized Arabic and English usage instructions right from the app settings menu.
 
 ## How to use:
 - **Share files from another app:** Tap Share in any app/game -> Select **Share Load**. The files are selected and the sending QR code opens automatically.
@@ -56,6 +63,7 @@ A powerful Android file-sharing and local network communication application desi
 - **Instant Clipboard (4):** Open chat in connected transfer, tap "Paste & Send" to send copied links or text.
 - **Network Speed Analyzer (5):** Tap the **Network Speed** card to check Wi-Fi signal, frequency (5GHz vs 2.4GHz), ping latency, and transfer speed.
 - **Secure Vault (7):** Tap the **Secure Vault** card, set your 4-digit PIN, and safely hide photos and documents with one tap!
+- **Cannon War Game (لعبة حرب وتخبئة الأسلحة والمدافع):** Tap the **حرب المدافع والأسلحة** card on the home screen or open the Games tab in Share Load to play!
 
 Greetings from the developer Mohammed Hisham Al-Salahi / مع تحيات المطور محمد هشام الصلاحي.
 

@@ -32,6 +32,9 @@
           android:title="@string/vault_title"
           android:icon="@drawable/ic_vault"
           app:showAsAction="ifRoom"/>
+    <item android:id="@+id/cannon_war"
+          android:title="@string/cannon_war_title"
+          app:showAsAction="never"/>
     <item android:id="@+id/clone_phone"
           android:title="@string/clone_phone_title"
           app:showAsAction="never"/>

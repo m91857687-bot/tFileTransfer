@@ -252,5 +252,9 @@
     <string name="vault_tab_videos">Videos</string>
     <string name="vault_tab_docs">Documents</string>
     <string name="vault_change_pin">Change PIN</string>
+
+    <!-- 8. Cannon Arsenal War / Hide Weapons -->
+    <string name="cannon_war_title">Cannon Arsenal War</string>
+    <string name="cannon_war_subtitle">Hide cannons &amp; weapons, tactical barrage battle</string>
     <!--endregion-->
 </resources>

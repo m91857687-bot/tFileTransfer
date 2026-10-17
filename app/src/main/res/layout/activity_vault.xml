@@ -15,7 +15,6 @@
         android:background="@color/white"
         android:elevation="3dp"
         app:navigationIcon="@drawable/ic_back_arrow"
-        app:navigationIconTint="@color/black_1"
         app:title="@string/vault_title"
         app:titleTextColor="@color/black_1" />
 

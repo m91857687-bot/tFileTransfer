@@ -192,6 +192,11 @@ class ConnectionActivity : BaseCoroutineStateActivity<ConnectionActivity.Compani
             true
         }
 
+        viewBinding.toolBar.menu.findItem(R.id.cannon_war)?.setOnMenuItemClickListener {
+            safeStartActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.games.CannonWarActivity::class.java))
+            true
+        }
+
         viewBinding.toolBar.menu.findItem(R.id.clone_phone)?.isVisible = false
 
         viewBinding.toolBar.menu.findItem(R.id.instructions)?.setOnMenuItemClickListener {
@@ -243,6 +248,9 @@ class ConnectionActivity : BaseCoroutineStateActivity<ConnectionActivity.Compani
         }
         viewBinding.cardVault.setOnClickListener {
             safeStartActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.vault.VaultActivity::class.java))
+        }
+        viewBinding.cardCannonWar.setOnClickListener {
+            safeStartActivity(Intent(this@ConnectionActivity, com.tans.tfiletransporter.ui.games.CannonWarActivity::class.java))
         }
         viewBinding.btnCategoryApps.setOnClickListener { openFileManager(0) }
         viewBinding.btnCategoryImages.setOnClickListener { openFileManager(1) }

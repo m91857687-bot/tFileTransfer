@@ -34,34 +34,39 @@ class CleanerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityCleanerBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        try {
+            binding = ActivityCleanerBinding.inflate(layoutInflater)
+            setContentView(binding.root)
 
-        binding.toolBar.setNavigationOnClickListener {
-            finish()
-        }
-
-        categoryAdapter = CleanerCategoryAdapter(categories) {
-            updateTotalCleanableUI()
-        }
-        binding.rvCleanerCategories.apply {
-            layoutManager = LinearLayoutManager(this@CleanerActivity)
-            adapter = categoryAdapter
-        }
-
-        binding.cbSelectAll.setOnCheckedChangeListener { _, isChecked ->
-            categories.forEach { cat ->
-                cat.files.forEach { it.isSelected = isChecked }
+            binding.toolBar.setNavigationOnClickListener {
+                finish()
             }
-            categoryAdapter.notifyDataSetChanged()
-            updateTotalCleanableUI()
-        }
 
-        binding.btnCleanNow.setOnClickListener {
-            showCleanConfirmDialog()
-        }
+            categoryAdapter = CleanerCategoryAdapter(categories) {
+                updateTotalCleanableUI()
+            }
+            binding.rvCleanerCategories.apply {
+                layoutManager = LinearLayoutManager(this@CleanerActivity)
+                adapter = categoryAdapter
+            }
 
-        startScanning()
+            binding.cbSelectAll.setOnCheckedChangeListener { _, isChecked ->
+                categories.forEach { cat ->
+                    cat.files.forEach { it.isSelected = isChecked }
+                }
+                categoryAdapter.notifyDataSetChanged()
+                updateTotalCleanableUI()
+            }
+
+            binding.btnCleanNow.setOnClickListener {
+                showCleanConfirmDialog()
+            }
+
+            startScanning()
+        } catch (e: Throwable) {
+            com.tans.tfiletransporter.logs.AndroidLog.e("CleanerActivity", "onCreate error", e)
+            Toast.makeText(this, "Cleaner error: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun startScanning() {

@@ -5,7 +5,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.lifecycleScope
 import com.tans.tfiletransporter.ui.filetransport.FileTransportActivity
 import com.tans.tfiletransporter.transferproto.fileexplore.requestMsgSuspend
@@ -13,7 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.tans.tfiletransporter.logs.AndroidLog
 
-enum class GameType { NONE, TICTACTOE, CONNECT4, OTHELLO }
+enum class GameType { NONE, TICTACTOE, CONNECT4, OTHELLO, CANNON_WAR }
 
 @Composable
 fun GamesScreen(activity: FileTransportActivity) {
@@ -38,6 +40,7 @@ fun GamesScreen(activity: FileTransportActivity) {
                     "TICTACTOE" -> currentGame = GameType.TICTACTOE
                     "CONNECT4" -> currentGame = GameType.CONNECT4
                     "OTHELLO" -> currentGame = GameType.OTHELLO
+                    "CANNON_WAR" -> currentGame = GameType.CANNON_WAR
                 }
             } else if (jsonStr == "EXIT_GAME") {
                 currentGame = GameType.NONE
@@ -47,31 +50,45 @@ fun GamesScreen(activity: FileTransportActivity) {
 
     if (currentGame == GameType.NONE) {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize().padding(16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Select a Game to Play!", style = MaterialTheme.typography.headlineMedium)
-            Spacer(modifier = Modifier.height(32.dp))
+            Text("اختر لعبة للمنافسة! 🎮", style = MaterialTheme.typography.headlineMedium)
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Featured New Game: Cannon Weapons War
+            Button(
+                onClick = { 
+                    currentGame = GameType.CANNON_WAR
+                    sendGameEvent("START_GAME:CANNON_WAR")
+                },
+                modifier = Modifier.fillMaxWidth(0.85f),
+                colors = ButtonDefaults.buttonColors(containerColor = androidx.compose.ui.graphics.Color(0xFF0D9488))
+            ) {
+                Text("💣 حرب المدافع وتخبئة الأسلحة (جديد)", fontWeight = FontWeight.Bold, fontSize = 15.sp)
+            }
+
+            Spacer(modifier = Modifier.height(14.dp))
             Button(onClick = { 
                 currentGame = GameType.TICTACTOE
                 sendGameEvent("START_GAME:TICTACTOE")
-            }, modifier = Modifier.fillMaxWidth(0.6f)) {
+            }, modifier = Modifier.fillMaxWidth(0.85f)) {
                 Text("Tic Tac Toe (X O)")
             }
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(14.dp))
             Button(onClick = { 
                 currentGame = GameType.CONNECT4
                 sendGameEvent("START_GAME:CONNECT4")
-            }, modifier = Modifier.fillMaxWidth(0.6f)) {
-                Text("Connect 4")
+            }, modifier = Modifier.fillMaxWidth(0.85f)) {
+                Text("Connect 4 (أربعة على التوالي)")
             }
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(14.dp))
             Button(onClick = { 
                 currentGame = GameType.OTHELLO
                 sendGameEvent("START_GAME:OTHELLO")
-            }, modifier = Modifier.fillMaxWidth(0.6f)) {
-                Text("Othello (Reversi)")
+            }, modifier = Modifier.fillMaxWidth(0.85f)) {
+                Text("Othello (ريفرسي)")
             }
         }
     } else {
@@ -79,11 +96,12 @@ fun GamesScreen(activity: FileTransportActivity) {
             Button(onClick = { 
                 currentGame = GameType.NONE
                 sendGameEvent("EXIT_GAME")
-            }, modifier = Modifier.padding(16.dp)) {
-                Text("Exit Game")
+            }, modifier = Modifier.padding(12.dp)) {
+                Text("⬅️ الخروج من اللعبة")
             }
             Box(modifier = Modifier.weight(1f)) {
                 when (currentGame) {
+                    GameType.CANNON_WAR -> CannonWarGame(activity.gameEventFlow, sendGameEvent)
                     GameType.TICTACTOE -> TicTacToeGame(activity.gameEventFlow, sendGameEvent)
                     GameType.CONNECT4 -> Connect4Game(activity.gameEventFlow, sendGameEvent)
                     GameType.OTHELLO -> OthelloGame(activity.gameEventFlow, sendGameEvent)

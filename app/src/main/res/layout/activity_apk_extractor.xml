@@ -15,8 +15,7 @@
         android:background="@color/teal_200"
         app:title="@string/apk_extractor_title"
         app:titleTextColor="@color/white"
-        app:navigationIcon="@drawable/ic_back_arrow"
-        app:navigationIconTint="@color/white" />
+        app:navigationIcon="@drawable/ic_back_arrow" />
 
     <!-- Search and Filter Bar -->
     <androidx.cardview.widget.CardView

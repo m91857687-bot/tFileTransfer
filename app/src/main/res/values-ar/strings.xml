@@ -252,5 +252,9 @@
     <string name="vault_tab_videos">الفيديوهات</string>
     <string name="vault_tab_docs">المستندات</string>
     <string name="vault_change_pin">تغيير رمز PIN</string>
+
+    <!-- 8. Cannon Arsenal War / Hide Weapons -->
+    <string name="cannon_war_title">حرب المدافع والأسلحة</string>
+    <string name="cannon_war_subtitle">تخبئة الأسلحة والمدافع وقصف العدو بالتناوب</string>
     <!--endregion-->
 </resources>

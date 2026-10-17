@@ -15,7 +15,6 @@
         android:background="@color/white"
         android:elevation="3dp"
         app:navigationIcon="@drawable/ic_back_arrow"
-        app:navigationIconTint="@color/black_1"
         app:title="@string/network_speed_title"
         app:titleTextColor="@color/black_1" />
 
@@ -57,8 +56,6 @@
                             android:indeterminate="false"
                             android:max="100"
                             android:progress="85"
-                            android:progressDrawable="@drawable/common_dialog_bg"
-                            android:rotation="-90"
                             android:visibility="gone"/>
 
                         <ImageView
